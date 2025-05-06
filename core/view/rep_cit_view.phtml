@@ -1,0 +1,119 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class mensajes_view{
+    public function __construct(){
+
+    }
+
+    function visualizaMe($lenguaje,$botones,$clases,$especialist){
+
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+    ?>
+        <div class="container">
+            <div class="desarrollo">
+                <div class="titlepag"><blockquote><i class="fa fa-folder fa-lg"></i> <?php echo $ttmensaje ?></blockquote></div>
+
+                    <table class="table">
+                        <tr><td class="col-sm-3">
+                            <div class="dual-list list-left">
+                                <div class="well text-left">
+                                
+                                <label for="lblnombre"><?php echo $tfecharep ?>:</label>
+                                <input type="date" autocomplete="off" class="form-control" id="txtfechacita" name="txtfechacita" aria-describedby="codigoHelp" placeholder="Fecha de nacimiento" value="<?php echo date('Y-m-d'); ?>">
+
+                                    <h4><?php echo $tespecialita ?>:</h4>
+                                    <div class="row">
+                                        <div class="col-md-8">                                    
+                                            <div class="input-group">
+                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" id="especialista">
+                                    <?php
+                                            foreach ($especialist as $valus){
+                                                echo '<li id="liespeci" class="list-group-item"> <input class="form-check-input me-1" id="chespecial" name="chespecial" type="checkbox" value="'.$valus['id_usuarios'].'"> '.$valus['nombres_usuarios'].' '.$valus['apellidos_usuarios'].'</li>';   
+                                            }
+                                    ?>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="dual-list list-left">
+                                <div class="well text-left">
+                                    <h4><?php echo $tpacientes ?>:</h4>
+                                    <div class="row">
+                                        <div class="col-md-8">                                    
+                                            <div class="input-group">
+                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" id="pacientes">
+                                    </ul>
+                                </div>
+                            </div>
+                        </td><td>
+                        <!-- contenidoo --> 
+                        <form id="frmcitas">
+                        <?php 
+                            echo '<label for="lblnombre">'.$tnumdoc.':</label>
+                            <input type="hidden" class="form-control" id="idespecialista" name="idespecialista" readonly required>
+                            <input type="text" autocomplete="off" id="txtced" name="txtced" class="form-control" placeholder="Identificacion paciente" required>
+                            <label for="lblnombre">'.$tapellidos.':</label>
+                            <input type="text" autocomplete="off" class="form-control" id="txtapellidos" name="txtapellidos" aria-describedby="codigoHelp" placeholder="Apellidos paciente" required>
+                            <label for="lblnombre">'.$tnombres.':</label>
+                            <input type="text" class="form-control" id="txtnombres" name="txtnombres" aria-describedby="codigoHelp" placeholder="Nombres paciente" >
+                            <label for="lblnombre">'.$tgtelefono.':</label>
+                            <input type="text" class="form-control" id="dtxttelefono" name="txttelefono" aria-describedby="codigoHelp" placeholder="Telefono paciente" >
+                            <label for="lblnombre">'.$tmail.':</label>
+                            <input type="text" class="form-control" id="txtmail" name="txtmail" aria-describedby="codigoHelp" placeholder="Email paciente" >
+                            <label for="lblnombre">'.$tespecialita.':</label>
+                            <input type="text" class="form-control" id="txtespecialista" name="txtespecialista" aria-describedby="codigoHelp" placeholder="Nombres expecialista" readonly >
+
+                            <table class="table"><tr><td><label for="lblnombre">'.$ttipocita.':</label>
+                                    <input type="text" class="form-control" id="txttipocita" name="txttipocita" aria-describedby="codigoHelp" placeholder="Tipo de cita" >
+                            </td><td> <label for="lblnombre">'.$tconfirma.':</label>
+                                    <select class="form-control custom-select my-1 mr-sm-2" id="cmbconfirma" name="cmbconfirma" >
+                                    <option value="1">Si</option>
+                                    <option value="0">No</option>
+                                    </select>
+                            </td></tr></table>
+
+                            <label for="lblnombre">'.$tobserva.':</label>
+                            <input type="text" class="form-control" id="txtobservacion" name="txtobservacion" aria-describedby="codigoHelp" placeholder="Nombres expecialista" >
+                            <table class="table"><tr><td>
+                                <label for="lblnombre">'.$tfechacita.':</label>
+                                <input type="text" class="form-control" id="txtfechacitad" name="txtfechacitad" aria-describedby="codigoHelp" placeholder="Fecha de la cita" readonly >
+                            </td><td>
+                                <label for="lblnombre">'.$thorai.':</label>
+                                <input type="time" class="form-control" id="txthorai" name="txthorai" aria-describedby="codigoHelp" placeholder="Hora inicio cita" readonly >
+                            </td><td>
+                                <label for="lblnombre">'.$thoraf.':</label>
+                                <input type="time" class="form-control" id="txthoraf" name="txthoraf" aria-describedby="codigoHelp" placeholder="Hora fin cita" readonly >
+                            </td></tr></table>';
+                        ?>
+                         <!-- hasta aqui contenidoo -->    
+                        </form>
+                        </td></tr>
+                    </table>
+            </div>
+        </div>
+
+        <script src="<?php echo $rbase ?>/mensajes.js"></script>
+    <?php
+    }
+}
+?>

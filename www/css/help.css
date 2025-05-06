@@ -1,0 +1,96 @@
+.hint-content { 
+  color: #fff;
+  width: 300px;
+  position: absolute;
+  z-index: 5;
+  padding: 12px 0;
+  opacity: 1;
+  -webkit-transition: opacity .7s ease,visibility .7s ease;
+  transition: opacity .7s ease,visibility .7s ease;
+  pointer-events: none;
+}
+
+.hint-content::before {  /*horizontal*/
+  width: 0px;
+  bottom: 0;
+  left: 0;
+  content: '';
+  background-color: #fff;
+  height: 1px;
+  position: absolute;
+  transition: width 0.4s;
+  width: 180px;
+}
+.hint-content::after { /*vertical*/
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transform: rotate(-225deg);
+  transform: rotate(-225deg);
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  content: '';
+  background-color: #fff;
+  height: 1px;
+  position: absolute;
+  opacity: 1;
+  -webkit-transition: opacity .5s ease;
+  transition: opacity .5s ease;
+  transition-delay: 0s;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}
+.hint-content[data-position="4"]  {
+  bottom: 115px;
+  left: 40%;
+  margin-left: 56px;
+}
+
+.hint-contentc[data-position="1"]  {
+  bottom: 320px;
+  left: 25%;
+  margin-left: 56px;
+}
+
+.hint-contentc { 
+  color: rgb(0, 0, 0);
+  width: 300px;
+  position: absolute;
+  z-index: 5;
+  padding: 4px 0;
+  opacity: 1;
+  -webkit-transition: opacity .7s ease,visibility .7s ease;
+  transition: opacity .7s ease,visibility .7s ease;
+  pointer-events: none;
+}
+
+.hint-contentc::before {  /*horizontal*/
+  width: 0px;
+  bottom: 0;
+  left: 0;
+  content: '';
+  background-color: rgb(0, 0, 0);
+  height: 1px;
+  position: absolute;
+  transition: width 0.4s;
+  width: 180px;
+}
+.hint-contentc::after { /*vertical*/
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transform: rotate(-225deg);
+  transform: rotate(-225deg);
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  content: '';
+  background-color: rgb(0, 0, 0);
+  height: 1px;
+  position: absolute;
+  opacity: 1;
+  -webkit-transition: opacity .5s ease;
+  transition: opacity .5s ease;
+  transition-delay: 0s;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}

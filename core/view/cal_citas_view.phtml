@@ -1,0 +1,144 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class calendar_view{
+    public function __construct(){
+
+    }
+
+    function visualizaC($clases,$lenguaje,$especialist,$especialidades,$botones){
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+        $linkp = "?open=".encrypt('nav_pub_citas',leer()).'&drview='.encrypt('pres_fra_am'.$directo,leer())."'";
+?>
+      <link href='css/calendar.css' rel='stylesheet' />
+      <script src='js/calendar.js'></script>
+      <link rel="stylesheet" href="css/jquery.contextMenu.min.css">
+      <script src="js/jquery.contextMenu.min.js"></script>
+                        
+        <input type="hidden" id="valtmp" value="<?php echo $_SESSION['institucion'] ?>">
+        <input type="hidden" id="vertodo" value="<?php echo $_SESSION['vertodo'] ?>">
+        <input type="hidden" id="codus" value="<?php echo $_SESSION['codus'] ?>">
+        
+        <div class="container">
+            <div class="desarrollo">
+                <div class="titlepag"><blockquote><i class="fa fa-calendar fa-lg"></i> <?php echo $tcalen ?></blockquote></div>                
+                    <input type="hidden" class="form-control" id="boton1" name="boton1" value ="<?php echo $botones[0] ?>">
+                    <input type="hidden" class="form-control" id="boton2" name="boton2" value="<?php echo $botones[1] ?>">
+                    <input type="hidden" class="form-control" id="boton3" name="boton3" value="<?php echo $botones[2] ?>">
+                    <table class="table"><tr><td>
+                    <label class="badge" id="contadorcita"><?php echo $tnomcla ?> </label>
+                    </td><td>
+
+                    <form id="formahis" method="post" action="<?php echo $linkp ?>" target="print_popup" onsubmit="window.open('about:blank','print_popup','width=1000,height=800');">
+                        <input type="hidden" autocomplete="off" id="drview" name="drview" value="pres_fra_am">
+                    <?php 
+                        echo $gboto->get_boton(1,$bejecutar,"",2); 
+                    ?>
+                    </form>
+                    </td></tr><tr><td colspan="3">
+                    <div class="calendario" id='calendar'></div>
+                    </td></tr></table>
+                </div>
+        </div>
+        
+        <script src="<?php echo $rbase ?>/calendar.js"></script>
+        <script>cargar_calendar(<?php echo $botones[0] ?>,<?php echo $botones[1] ?>,<?php echo $botones[2] ?>);</script>
+
+       <!-- Modal -->
+       <div class="modal fade in" id="ModalEmpresa" tabindex="-1" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                        <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $tadcita ?></h5>
+                </div>
+                <input type="hidden" class="form-control" id="idcita" name="idcita" value="0" readonly required>
+                <input type="hidden" class="form-control" id="txtempresa" name="txtempresa" value="<?php echo $_SESSION['institucion']; ?>">
+                <div class="modal-body table-responsive" id="frmcitas">
+                    <?php echo '<label for="lblnombre">'.$tnumdoc.':</label>
+                    <input type="hidden" class="form-control" id="idespecialista" name="idespecialista" readonly required>
+                    <div class="form-group has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input type="text" autocomplete="off" id="txtced" name="txtced" class="form-control" placeholder="Identificacion paciente" required>
+                    </div>
+                    <label for="lblnombre">'.$tapellidos.':</label>
+                    <div class="form-group has-search">
+                        <span class="fa fa-search form-control-feedback"></span>
+                        <input type="text" autocomplete="off" class="form-control" id="txtapellidos" name="txtapellidos" aria-describedby="codigoHelp" placeholder="Apellidos paciente" required>
+                    </div>
+                    <div id="suggestions"></div>'. $gboto->get_boton(1,"Limpiar","limpiar()",2).'<br>
+                    <label for="lblnombre">'.$tnombres.':</label>
+                    <input type="text" class="form-control" id="txtnombres" name="txtnombres" aria-describedby="codigoHelp" placeholder="Nombres paciente" required>
+                    <label for="lblnombre">'.$tgtelefono.':</label>
+                    <input type="text" class="form-control" id="dtxttelefono" name="txttelefono" aria-describedby="codigoHelp" placeholder="Telefono paciente" required>
+                    <label for="lblnombre">'.$tmail.':</label>
+                    <input type="text" class="form-control" id="txtmail" name="txtmail" aria-describedby="codigoHelp" placeholder="Email paciente" required>
+                    <label for="lblnombre">'.$tespecialita.':</label>
+                    <input type="text" class="form-control" id="txtespecialista" name="txtespecialista" aria-describedby="codigoHelp" placeholder="Nombres expecialista" readonly required>
+
+                    <table class="table"><tr><td><label for="lblnombre">'.$ttipocita.':</label>
+                            <select class="form-control custom-select my-1 mr-sm-2" id="cbtipocita" name="cbtipocita" required></select>
+                    </td><td> <label for="lblnombre">'.$tconfirma.':</label>
+                            <select class="form-control custom-select my-1 mr-sm-2" id="cmbconfirma" name="cmbconfirma" required>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                            </select>
+                    </td></tr></table>
+
+                    <label for="lblnombre">'.$tobserva.':</label>
+                    <input type="text" class="form-control" id="txtobservacion" name="txtobservacion" aria-describedby="codigoHelp" placeholder="Nombres expecialista" required>
+                    <table class="table"><tr><td>
+                        <label for="lblnombre">'.$tfechacita.':</label>
+                        <input type="date" class="form-control" id="txtfechacita" name="txtfechacita" aria-describedby="codigoHelp" placeholder="Fecha de la cita" readonly required>
+                    </td><td>
+                        <label for="lblnombre">'.$thorai.':</label>
+                        <input type="time" class="form-control" id="txthorai" name="txthorai" aria-describedby="codigoHelp" placeholder="Hora inicio cita" readonly required>
+                    </td><td>
+                        <label for="lblnombre">'.$thoraf.':</label>
+                        <input type="time" class="form-control" id="txthoraf" name="txthoraf" aria-describedby="codigoHelp" placeholder="Hora fin cita" readonly required>
+                    </td></tr></table>';
+                  ?>
+                </div>
+                <div class="modal-footer" id="alertas">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button><?php echo $gboto->get_guardar($botones[0],"guarda_agenda()") ?>
+                </div>
+             </div>    
+     </div>
+    </div>
+        <?php echo $gboto->get_mensajes(); ?>
+        <!--horarios -->
+        <div class="modal" id="frmhorarios" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><?php echo $tfrmhorario ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="hcontenido">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+<?php }
+}
+?>
+
+
+   

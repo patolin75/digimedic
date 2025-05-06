@@ -1,0 +1,244 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class hiscli_view{
+    public function __construct(){
+
+    }
+
+    function visualizaHi($lenguaje,$botones,$clases,$pacientes,$directo,$institu,$especialidad){
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+        echo $gboto->get_mensajes();
+    ?>
+        <link rel="stylesheet" href="js/charts/styles.css" />
+        <link rel="stylesheet" href="js/editor/themes/default.min.css" id="theme-style" />
+        <script src="js/editor/sceditor.min.js"></script>
+        <script src="js/jQuery.print.js"></script> 
+        <script src="<?php echo $rbase ?>/hiscli.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+        <div class="container">
+            <div class="desarrollo">
+                    <div class="col-md-11"><div class="titlepag"><blockquote><i class="fa fa-folder fa-lg"></i> <?php echo $thistoria ?></blockquote></div></div>
+                    <div class="textocitas"><p>Agenda:</p> <b> <div class="bannercitas" id="bannercitas"> </div></b></div>
+                        <table class="table"><tr><td>
+                            <?php 
+                            echo '<input type="hidden" autocomplete="off" id="idins" name="idins" value="'.$institu.'">
+                                <input type="hidden" autocomplete="off" id="idpac" name="idpac" value="'.$directo.'">
+                                <input type="hidden" autocomplete="off" id="hiscli" name="hiscli" value="0">
+                                <input type="hidden" autocomplete="off" id="txtus" name="txtus" value="'.$_SESSION['codus'].'">
+                                <input type="hidden" autocomplete="off" id="visihis" name="visihis" value="0">
+                                <input type="hidden" autocomplete="off" id="idexam" name="idexam" value="0">';
+                            if (!$directo){
+                                echo '<div class="dual-list list-left">
+                                <div class="well text-left">
+                                    <h4>'.$tpacientes.':</h4>
+                                    <div class="row">
+                                        <div class="col-md-8">                                    
+                                            <div class="input-group">
+                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" id="especialista">';
+                                            foreach ($pacientes as $valus)
+                                                echo '<li id="liespeci" class="list-group-item"> <input class="form-check-input me-1 slectOne" id="chespecial" name="chespecial" type="checkbox" value="'.$valus['id_cliente'].'"> '.$valus['clientes_identificacion'].' - '.$valus['clientes_nombres'].' '.$valus['clientes_apellidos'].'</li>';   
+                                echo '</ul>';
+                                echo '</div>
+                                </div>';
+                            }else{
+                                $link="window.location.href='?open=".encrypt('pac_man',leer()).'&kode='.encrypt('id='.$id.'&sub=20&pri='.$directo,leer())."'";
+                                echo '<script>get_paciente('.$directo.');</script>
+                                <div class="dual-list list-left">
+                                <div class="well text-center">
+                                    <h4>'.$tpaciente.':</h4>
+                                            <div class="picture-container">
+                                                <div class="picture">
+                                                    <img src="'.$foto.'" class="picture-src" id="wizardPicturePreview" title=""/>
+                                                </div>
+                                                <label id="edad"></label>
+                                            </div>
+                                            <input type="text" autocomplete="off" class="form-control ninput" id="txtnombres" name="txtnombres">
+                                            <input type="text" autocomplete="off" class="form-control ninput " id="txtapellidos" name="txtapellidos"><br>';
+                                            if ($directo) echo $gboto->get_boton(1,$binfopac,$link,2).'
+                                        </div>';
+                                echo '</div>
+                                </div>';
+                            }
+                            echo'<div class="dual-list list-left0">
+                                <div class="well text-left0">
+                                    <h4>'.$thistorial.':</h4>
+                                    <div class="row">
+                                        <div class="col-md-10">                                    
+                                            <div class="input-group">
+                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                <span class="input-group-addon glyphicon glyphicon-search"></span> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" id="historial">
+                                    </ul>
+                                    </div>
+                                </div>';
+                            ?>
+                    </td><td>
+                                <div class="card">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li id="li0" role="presentation" class="active hidden"><a href="#zone0"  role="tab" id="titulo0" data-toggle="tab"><?php echo $tsignosv ?></a></li>
+                                        <li id="li1" class="hidden" role="presentation"><a href="#zone1"  role="tab" id="titulo1" data-toggle="tab"><?php echo $tsignosv ?></a></li>
+                                        <li id="li2" class="hidden" role="presentation"><a href="#zone2"  role="tab" id="titulo2" data-toggle="tab"><?php echo $tsignosv ?></a></li>
+                                        <li id="li3" class="hidden" role="presentation"><a href="#zone3"  role="tab" id="titulo3" data-toggle="tab"><?php echo $tsignosv ?></a></li>
+                                        <li id="li4" class="hidden" role="presentation"><a href="#zone4"  role="tab" id="titulo4" data-toggle="tab"><?php echo $tsignosv ?></a></li>
+                                        <li id="exmanl" role="presentation"><a href="#exman" role="tab" id="exam" data-toggle="tab"><?php echo $texmamenes ?></a></li>
+                                        <li id="li5" role="presentation"><a href="#zone5" role="tab" id="titulo5" data-toggle="tab"><?php echo $trecetas ?></a></li>
+                                        <li id="li5" role="presentation"><a href="#graficas" role="tab" id="grafica" data-toggle="tab"><?php echo $tgraficas ?></a></li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <?php
+                                            echo '<div class="row"><div class="col-xs-8">'.$tfecregis.': <label id="fregistro" name="fregistro"></label></div>';
+                                            echo '</div>';
+                                        ?>
+                                            <div role="tabpanel" class="tab-pane active" id="zone0"></div>
+                                            <div role="tabpanel" class="tab-pane" id="zone1"></div>
+                                            <div role="tabpanel" class="tab-pane" id="zone2"></div>
+                                            <div role="tabpanel" class="tab-pane" id="zone3"></div>
+                                            <div role="tabpanel" class="tab-pane" id="zone4"></div>
+                                            <div role="tabpanel" class="tab-pane" id="exman">
+                                                    <table class="table table-striped"><tr><td rowspan="2">
+                                                        <?php  echo'<div class="dual-list list-left0">
+                                                            <div class="well text-left0">
+                                                                <h4>'.$tresultados.':</h4>
+                                                                <div class="row">
+                                                                    <div class="col-md-10">                                    
+                                                                        <div class="input-group">
+                                                                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                                            <span class="input-group-addon glyphicon glyphicon-search"></span> 
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <ul class="list-group" id="examenes">
+                                                                </ul>
+                                                                </div>
+                                                            </div>';
+                                                        ?>
+                                                        </td><td>
+                                                            <label><?php echo $texarchivos; ?></label>
+                                                            <div class="table table-striped files" id="previews">
+                                                        </td><tr><td>
+                                                            <label><?php echo $texapaciente; ?></label>
+                                                            <textarea id="txtobserva"></textarea>   
+                                                            <?php  echo $gboto->get_boton($botones[0],"Pedido examenes","",2);?>     
+                                                        </td></tr>
+                                                    </table>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="zone5">
+                                                <?php
+                                                echo '<div id="impresion"><div style="text-align : center;"><img class="picture-hist" id="imgqr"  width="150" height="150"/></div>
+                                                <br><label>'.$tmedicam.' </label>: click en <img src="images/vademecum.png" style="height: 30px; width: 30px;" title=""/> para acceder a Vademecum
+                                                <textarea class="form-control" id="txtmsg55" name="txtmsg55"></textarea><br><label>'.$tprecrib.' </label>:
+                                                <textarea class="form-control" id="txtmsg56" name="txtmsg56"></textarea><br></div>';
+                                                echo $gboto->get_boton(1,"Imprimir","jQuery('#impresion').print()",2);
+                                                ?>
+                                            </div>
+
+                                            <div role="tabpanel" class="tab-pane" id="graficas">
+                                                    <hr><?php echo $ttipogra ?>:
+                                                    <select class="form-control custom-select my-1 mr-sm-2" id="sgrafica" onchange="generar_grafica($(this).val());">
+                                                        <option>Seleccione un tipo</option>
+                                                    </select>
+                                                    <br>
+                                                    <div class="row sparkboxes mt-4 col-md-12" id="impresionG">
+                                                           
+                                                    </div><br>
+                                                    <?php  echo $gboto->get_boton(1,"Imprimir","jQuery('#impresionG').print()",2); ?>
+                                            </div>
+                                    </div>
+                                </div>
+                            <?php
+                                echo '<table class="table"><tr align="center"><td>';
+                                    echo $gboto->get_botonnuevop($botones[0],"window.location.reload();");
+                                echo ' '.$gboto->get_guardar($botones[1],"guardar_his()").' '.$gboto->get_boton(1,"Finalizar cita","finalizar_cita()",2).' '.$gboto->get_eliminar($botones[2],"eliminar_his()").'</td></tr></table>';
+                            ?>
+                            
+                    </td></tr></table>
+
+            </div>
+        </div>
+            <div class="modal fade in" id="ModalVade" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                            <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $tventana ?></h5>
+                                </div>
+                            <div class="modal-body table-responsive">
+                                  <table class="table">
+                                      <tr><td class="col-sm-6">
+
+                                            <div class="dual-list list-left0">
+                                                <div class="well text-left0">
+                                                    <h4><?php echo $tvitulo ?>:</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-10">                                    
+                                                            <div class="input-group">
+                                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                                <span class="input-group-addon glyphicon glyphicon-search"></span> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="list-group" id="vademecum"></ul>
+                                                </div>
+                                            </div>
+
+                                    </td><td>
+                                        <?php echo $tlab ?>:<br>
+                                        <input class="form-control" type="text" autocomplete="off" id="txtlab" name="txtlab"><p></p>
+                                        <?php echo $tadmin ?>:<br>
+                                        <input class="form-control" type="text" autocomplete="off" id="txtadmin" name="txtadmin"><p></p>
+                                        <?php echo $tpresen ?>:<br>
+                                        <textarea class="form-control" class="form-control" id="txtpresen" name="txtpresen" rows="8" style="resize: both;"></textarea>
+                                    </td></tr></table>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button><?php echo $gboto->get_boton(1,"Recuperar","",2) ?>
+                    </div>
+                    </div>    
+                </div>
+                </div>
+
+                <script src="js/charts/apexcharts.js"></script>
+               
+                <script> 
+                        var txtobserva = document.getElementById('txtobserva');
+                        sceditor.create(txtobserva, {
+                            format: 'bbcode',
+                            icons: 'monocons',
+                            style: 'js/editor/themes/content/default.min.css',
+                            locale: 'es',
+                            width: "100%",
+                            height: "100%",
+                            toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule|date,time|print"
+                        });
+                        cita_actua('<?php echo $_SESSION['codus']; ?>');
+                        recuperar_campos(<?php echo $institu ?>,<?php echo $especialidad ?>);
+                </script>
+    <?php
+         if ($directo) 
+            echo "<script>recupera_historia(".$directo.",".$_SESSION['codus']."); cargar_examenes(".$directo.");</script>";
+    }
+}    
+?>

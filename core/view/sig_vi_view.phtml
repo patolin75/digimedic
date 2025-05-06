@@ -1,0 +1,118 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class signos_view{
+    public function __construct(){
+
+    }
+
+    function signosVi($lenguaje,$botones,$clases,$pacientes,$institu,$especialistas){
+        
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+
+        echo $gboto->get_mensajes();
+    ?>
+        <script src="<?php echo $rbase ?>/signos.js"></script>
+        <link rel="stylesheet" href="js/editor/themes/default.min.css" id="theme-style" />
+        <script src="js/editor/sceditor.min.js"></script>
+        <script src="js/editor/icons/monocons.js"></script> 
+        <script src="js/jQuery.print.js"></script> 
+        
+        <link rel='stylesheet prefetch' href='css/bootstrap-select.min.css'>
+        <script src="js/bootstrap-select.min.js"></script>
+
+       
+        <div class="container">
+            <div class="desarrollo">
+                    <div class="titlepag"><blockquote><i class="fa fa-folder fa-lg"></i> <?php echo $ttituls ?></blockquote></div>
+                    
+                        <table class="table"><tr><td class="col-sm-4">
+                            <?php 
+                            echo '<input type="hidden" autocomplete="off" id="idins" name="idins" value="'.$institu.'">
+                                <input type="hidden" autocomplete="off" id="idpac" name="idpac" value="0">
+                                <input type="hidden" autocomplete="off" id="hiscli" name="hiscli" value="0">
+                                <input type="hidden" autocomplete="off" id="visihis" name="visihis" value="0">';
+                               
+                                echo '<div class="well text-rigth"><h4>'.$tespecialita.':</h4>
+                                <select id="selecpe" name="selecpe" onchange="recuperar_campos('.$institu.',this.value)" class="selectpicker show-menu-arrow" 
+                                data-style="form-control" 
+                                data-live-search="true" 
+                                title="Pacientes">
+                                    <option data-tokens value="0">Ninguno</option>';
+                                    foreach ($especialistas as $valus){
+                                        echo '<option data-tokens value="'.$valus['id_especialidad'].'-'.$valus['id_usuarios'].'">'.$valus['nombres_usuarios'].' '.$valus['apellidos_usuarios'].'</option>';
+                                    }
+                            echo '</select></div>
+
+                                <div class="dual-list list-left">
+                                <div class="well text-left">
+                                    <h4>'.$tpacientes.':</h4>
+                                    <div class="row">
+                                        <div class="col-md-8">                                    
+                                            <div class="input-group">
+                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" id="especialista">';
+                                            foreach ($pacientes as $valus)
+                                                echo '<li id="liespeci" class="list-group-item"> <input class="form-check-input me-1 slectOne" id="chespecial" name="chespecial" type="checkbox" value="'.$valus['id_cliente'].'"> '.$valus['clientes_identificacion'].' - '.$valus['clientes_nombres'].' '.$valus['clientes_apellidos'].'</li>';   
+                                echo '</ul>';
+                                echo '</div>
+                                </div>';
+
+                            echo'<div class="dual-list list-left0">
+                                <div class="well text-left0">
+                                    <h4>'.$thistorial.':</h4>
+                                    <div class="row">
+                                        <div class="col-md-10">                                    
+                                            <div class="input-group">
+                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                <span class="input-group-addon glyphicon glyphicon-search"></span> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" id="historial">
+                                    </ul>
+                                    </div>
+                                </div>';
+                            ?>
+                    </td><td>
+                                <div class="card">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li id="li0" role="presentation" class="active"><a href="#zone0"  role="tab" id="titulo0" data-toggle="tab"><?php echo $tinfor ?></a></li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                            <div class="row"><div class="col-xs-8"><?php echo $tfecregis ?>: <label id="fregistro" name="fregistro"> </label></div></div>
+                                            <div role="tabpanel" class="tab-pane active" id="zone0"></div>
+                                    </div>
+                                </div>
+                            <?php
+                                echo '<table class="table"><tr align="center"><td>';
+                                    echo $gboto->get_botonnuevop($botones[0],"limpiar_n()");
+                                echo ' '.$gboto->get_guardar($botones[1],"guardar_visit()").' '.$gboto->get_eliminar($botones[2],"eliminar_visit()").'</td></tr></table>';
+                            ?>
+                    </td></tr></table>
+
+                    <script> 
+                        //recuperar_campos(1,4);
+                    </script>
+
+            </div>
+        </div>
+    <?php
+    }
+}    
+?>

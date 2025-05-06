@@ -1,0 +1,29 @@
+<?php
+class footer_view{
+        public function __construct(){
+
+        }
+
+        function vista($lenguaje,$code){
+                $code='"'.$code.'"';
+               // echo '<div id="filofooter"><span class="company"></span></div>';
+               if (file_exists($lenguaje)) include ($lenguaje);
+               echo '<script src="'.$rbase.'/footer.js"></script>';
+        ?>  
+                <div id="snackbar">msg</div>
+                <script>
+                        validar_datos('<?php echo $code ?>','<?php echo $talerta1 ?>','<?php echo $talerta2 ?>');
+                        
+                        document.addEventListener("DOMContentLoaded", function(){
+                                /*const minute = 700000;*/
+                                const segundos=10000;
+                                setInterval(function(){
+                                        validar_datos('<?php echo $code ?>','<?php echo $talerta1 ?>','<?php echo $talerta2 ?>');
+                                        $('#contadormsg').text("");
+                                },segundos);
+                        });
+                </script>
+        <?php
+        }
+}
+?>

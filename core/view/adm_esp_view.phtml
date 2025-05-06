@@ -1,0 +1,115 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+
+class especialidades_view{
+    public function __construct(){
+
+    }
+
+    function visualizaEsp($filita,$datos,$institu,$roles,$accion,$clases,$open,$id,$sub,$boton,$filtrado){
+        if (file_exists($filita)) include ($filita);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+?>
+        <br>
+        <div class="container">
+                <div class="desarrollo justify-content-center">
+                <?php
+                    if ($accion >0){
+                        echo $gboto->tiempos();
+                    }
+                ?>
+                    <div class="titlepag"><blockquote><i class="fa fa-user fa-lg"></i> <?php echo $titues ?></blockquote></div>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                                <div class="table-responsive">
+                                <table class="table"><tr><td>
+                                <?php 
+                                    $link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
+
+                                    echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtro" name="filtro" 
+                                    onchange="'.$link.'" required><option value="0">Todos</option>';
+                                    foreach ($institu as $valus){
+                                        echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                    }
+                                    echo '  </select></td><td>'.$tgacciones;
+                                echo $gboto->get_botonnuevo($boton[0],"limpiar(0)"); ?>
+                                </td></tr></table>
+                                <br>
+                                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th><?php echo $tcodrol ?></th>
+                                        <th><?php echo $tespec ?></th>
+                                        <th><?php echo $tgacciones ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    if ($datos){
+                                        foreach ($datos as $campos){
+                                                $llamado= "cargar('".$rbase."','".$campos['id_especialidad']."')";
+                                                $llamado1="Borrar('".$rbase."','".$campos['id_especialidad']."','".$open. "','".$id."','".$sub."')";
+                                                echo '<tr><td>'.$campos['id_especialidad'].'</td><td>'.$campos['esp_nombre'].'</td><td>'.$gboto->get_botonesgrid($boton[1],$boton[2],$llamado,$llamado1).'</td></tr>';
+                                        }
+                                        echo "<script>$('#filtro').val(".$filtrado.");</script>";
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                                </div>
+                    </div>
+                    </div><div class="separar"></div>
+                </div>
+            </div>
+        </div>
+
+<!-- Modal -->
+    <div class="modal fade in" id="ModalEmpresa" tabindex="-1" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            <form action="?open=<?php echo encrypt($open,leer()) ?>&kode=<?php echo encrypt('id='.$id.'&sub='.$sub,leer()) ?>" method="post" enctype="multipart/form-data">  
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $titues ?></h5>
+            </div>
+                <div class="modal-body table-responsive">
+                        <?php 
+                        echo ' <label for="lblnombre">'.$tinstitucion.':</label>
+                            <select class="form-control custom-select my-1 mr-sm-2" id="cmbinstitu" name="cmbinstitu">';
+                            foreach ($institu as $valus){
+                                echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                            }
+                            echo '  </select>';
+                        echo '<input id="txtiduser" name="txtiduser" type="hidden" type="text" />
+                                    <label for="lblnombre">'.$tcodrol.':</label>
+                                    <input type="text" class="form-control" id="txtcodigo" name="txtcodigo" aria-describedby="codigoHelp" placeholder="Identificacion usuario" readonly>
+                                    <label for="lblnombre">'.$tespec.':</label>
+                                    <input type="text" class="form-control" id="txtnombres" name="txtnombres" aria-describedby="codigoHelp" placeholder="Nombres usuario" required><br>
+                                    <label for="lbldetalle">'.$tobserva.':</label>
+                                    <textarea class="form-control" id="txtobserva" name="txtobserva" rows="3" placeholder="Dirección usuario" required></textarea>';
+                        ?>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button><?php echo $gboto->get_guardar(1,"") ?>
+        </div>
+        </form>
+        </div>    
+    </div>
+    </div>
+
+    <?php echo $gboto->get_ventana($accion) ?>
+    <script src="<?php echo $rbase ?>/especialidad.js"></script>
+<?php
+    }
+}
+?>

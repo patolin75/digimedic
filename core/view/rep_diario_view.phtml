@@ -1,0 +1,107 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class repdiario_view{
+    public function __construct(){
+
+    }
+
+    function visualizaRepd($lenguaje,$botones,$clases,$reporte,$empresa,$codus){
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+    ?>
+
+<link rel="stylesheet" href="js/calendar/css/rome.css">
+<script src="js/jQuery.print.js"></script> 
+
+<div class="container">
+    <div class="desarrollo">
+        <div class="titlepag"><blockquote><i class="fa fa-file fa-lg"></i> <?php echo $trepdiario ?></blockquote></div>
+                    <table class="table">
+                        <tr><td>
+                            <?php 
+                            echo '
+                                        
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-10 text-center">
+                                                <form action="#" class="row">
+                                                    <div class="col-md-10">
+                                                    <div id="inline_cal"></div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>';
+                            ?>
+                        </td><td>
+
+                            <div id="impresion">
+                            <div class="col-md-9">
+                            <div class="panel panel-primary ticket-list">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-center">
+                                    <?php 
+                                        foreach ($empresa as $value){
+                                            echo ' <div class="picture">
+                                                    <img src="'.$value['logo'].'" class="picture-src" id="wizardPicturePreview" title=""/></div>';
+                                            echo $value['name_institucion'];
+                                        }
+                                    ?>
+                                </h3>
+                            </div>
+                                <div class="panel-body ">
+                                        <label>Fecha:</label> <input type="text" class="form-control" id="result" placeholder="Seleccione fecha" disabled="" value="<?php echo date('Y-m-d') ?>">
+                                        <table class="table">
+                                            <thead class='table-head'>
+                                            <tr class='table-head'>
+                                                <th><?php echo $tdetalle ?></th>
+                                                <th><?php echo $tipovalor ?></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id ="bodyt">
+                                                <?php
+                                                    foreach($reporte as $valores){
+                                                        echo'<tr><td>Paciente: '.$valores['nombre'].' '.$valores['apellido'].' ('.$valores['cita'].')</td><td>'.$valores['valor'].'</td></tr>';
+                                                        $sum+=$valores['valor'];
+                                                    }
+                                                    echo'<tr><td><label>'.$ttotalr.':</label></td><td>'.$sum.' </td></tr>';
+                                                ?>
+                                            </tbody>
+                                        </table>    	
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                            <?php
+                            echo '<table class="table"><tr align="center"><td>';
+                            echo $gboto->get_boton(1,"Imprimir","jQuery('#impresion').print()",2);
+
+                        ?>
+                        </td></tr>
+                    </table>
+
+    </div>
+</div>
+
+    <script src="js/calendar/rome.js"></script>
+    <script src="<?php echo $rbase ?>/repdiario.js"></script>
+    <script>
+        $(function() {
+            rome(inline_cal, {time: false, inputFormat: 'YYYY-MM-DD'}).on('data', function (value) {
+                genera_val(<?php echo $codus ?>,value);
+                result.value = value;
+            });
+        });
+    </script>
+
+    <?php
+    }
+}
+?>

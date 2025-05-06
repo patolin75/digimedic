@@ -1,0 +1,66 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class notificaciones_view{
+    public function __construct(){
+
+    }
+
+    function visualizaNo($lenguaje,$botones,$clases,$clientes){
+
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+?>
+		<link rel="stylesheet" href="js/editor/themes/default.min.css" id="theme-style" />
+		  
+          <script src="js/editor/sceditor.min.js"></script>
+          <script src="js/editor/icons/monocons.js"></script> 
+
+        <div class="container">
+            <div class="desarrollo">
+            <div class="titlepag"><blockquote><i class="fa fa-file fa-lg"></i> <?php echo $ttnotifica ?></blockquote></div>
+                <table class="table">
+                    <tr><td class="col-sm-3">
+                        <div class="dual-list list-left">
+                            <div class="well text-left">
+                                <h4><?php echo $tpacientes ?>:</h4>
+                                <div class="row">
+                                    <div class="col-md-8">                                    
+                                        <div class="input-group">
+                                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="list-group" id="especialista">
+                                <?php
+                                        foreach ($clientes as $valus){
+                                            echo '<li id="liespeci" class="list-group-item"> <input class="form-check-input me-1" id="chespecial" type="checkbox" value="'.$valus['cita_telefono'].'" checked> '.$valus['clientes_nombres'].' '.$valus['clientes_apellidos'].'</li>';   
+                                        }
+                                ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </td><td>
+				        <textarea id="txtmsg"></textarea>
+                        <?php echo $tmensaje .'<br><br>'; echo $gboto->get_guardar($botones[0],"enviar()") ?>
+                    </td></tr>
+                </table>  
+            </div>
+        </div>
+
+       
+        <?php echo $gboto->get_ventana($accion) ?>
+        <script src="<?php echo $rbase ?>/notificaciones.js"></script>
+<?php
+    }
+}
+?>

@@ -1,0 +1,308 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class pacientes_view{
+    public function __construct(){
+
+    }
+
+    function visualizaPa($lenguaje,$botones,$clases,$pacientes,$directo,$id,$sub){
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+
+        echo $gboto->get_mensajes();
+    ?>
+
+
+        <div class="container">
+            <div class="desarrollo">
+                    <div class="col-md-10"><div class="titlepag"><blockquote><i class="fa fa-user fa-lg"></i> <?php echo strtoupper($tpacientes) ?></blockquote></div></div>
+                    <div class="textocitas"><p>Agenda:</p> <b> <div class="bannercitas" id="bannercitas"> </div></b></div>
+
+                    <table class="table">
+                        <tr><td>
+                            <?php 
+                            if (!$directo){
+                                echo '<script>$(document).ready(function(){ $("#wizardPicturePreview").attr("src","images/noimagen.jpg"); });</script>
+                                <div class="dual-list list-left">
+                                <div class="well text-left">
+                                    <h4>'.$tpacientes.':</h4>
+                                    <div class="row">
+                                        <div class="col-md-8">                                    
+                                            <div class="input-group">
+                                                <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group" id="especialista">';
+                                            foreach ($pacientes as $valus)
+                                                echo '<li id="liespeci" class="list-group-item"> <input class="form-check-input me-1 slectOne" id="chespecial" name="chespecial" type="checkbox" value="'.$valus['id_cliente'].'"> '.$valus['clientes_identificacion'].' - '.$valus['clientes_nombres'].' '.$valus['clientes_apellidos'].'</li>';   
+                                    echo '</ul>';
+                                    echo $gboto->get_boton($botones[0],"Importar",'importa',1);
+                                    echo '</div>
+                                 </div>';
+                            }
+                            ?>
+                        </td><td>
+                        <!-- contenidoo --> 
+                        <div class="card">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><?php echo $tpersonales ?></a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><?php echo $tdatosresi ?></a></li>
+                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><?php echo $tdatoadicio ?></a></li>
+                    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"><?php echo $tdatocontac ?></a></li>
+                </ul>
+
+                <input type="hidden" id="valtmp" name="valtmp" value="<?php echo $_SESSION['institucion'] ?>">
+                <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <!-- DATOS PERSONALES-->
+                            <div class="container-fluid">
+                                <?php
+                                    echo '<div class="row"><div class="col-xs-8">'.$tfecregis.': <label id="fregistro" name="fregistro"> </label></div>';
+                                    echo '<div class="col-xs-2">'.$gboto->get_boton(1,$bpaciente,"ir_historia()",2).'</div></div></div>';
+                                ?>
+                                 
+                                <form id="frmdatos" method="post">
+                                    <?php 
+                                    echo '<table class="table"><tr><td>
+                                    <label for="lblnombre">'.$tnumdoc.':</label>
+                                    <input type="hidden" autocomplete="off" id="idpac" name="idpac" value="'.$directo.'">
+                                    <input type="text" autocomplete="off" id="txtced" name="txtced" class="form-control" placeholder="Identificacion paciente" required>
+                                    </td><td><br></td><td rowspan="3" align="center">
+                                        <div class="picture-container">
+                                            <div class="picture">
+                                                <img src="'.$foto.'" class="picture-src" id="wizardPicturePreview" title=""/>
+                                                <input type="file" id="wizard-picture" id="wizard-picture" accept=".jpg, .png, .jpeg, .svg">
+                                            </div>
+                                            <h6>Cambiar foto</h6>
+                                            </div>
+                                            <input type="hidden" class="form-control" id="txtimage" name="txtimage">
+                                        </div>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$tapellidos.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtapellidos" name="txtapellidos" aria-describedby="codigoHelp" placeholder="Apellidos paciente" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tnombres.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtnombres" name="txtnombres" aria-describedby="codigoHelp" placeholder="Nombres paciente" required>
+                                    </td><td></td></tr>
+                                    <tr><td><label for="lblnombre">'.$tgtelefono.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="dtxttelefono" name="txttelefono" aria-describedby="codigoHelp" placeholder="Telefono paciente" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tmail.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtmail" name="txtmail" aria-describedby="codigoHelp" placeholder="Email paciente" required>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$ttiposangre.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtiposangre" name="txtiposangre" aria-describedby="codigoHelp" placeholder="Tipo de sangre" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$testadoci.':</label>
+                                        <select class="form-control custom-select my-1 mr-sm-2" id="txtestadociv" name="txtestadociv" required>
+                                                <option value="0">Soltero(a)</option>
+                                                <option value="1">Casado(a)</option>
+                                                <option value="2">Divorciado(a)</option>
+                                                <option value="3">Unióm libre</option>
+                                        </select>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tsexo.':</label>
+                                        <select class="form-control custom-select my-1 mr-sm-2" id="txtsexo" name="txtsexo" required>
+                                            <option value="0">Masculino</option>
+                                            <option value="1">Femenino</option>
+                                        </select>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$tfechanac.':</label>
+                                    <input type="date" autocomplete="off" class="form-control" id="txtfechanac" name="txtfechanac" aria-describedby="codigoHelp" placeholder="Fecha de nacimiento" required>
+                                    </td>
+                                    <td>
+                                    <label for="lblnombre">'.$tedad.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtedad" name="txtedad" aria-describedby="codigoHelp" placeholder="Edad" readonly required>
+                                    </td>
+                                    <td>
+                                    <label for="lblnombre">'.$tnaciona.':</label>
+                                        <select class="form-control custom-select my-1 mr-sm-2" id="txtnaciona" name="txtnaciona" required>
+                                        <option value="0">Ecuatoriana</option>
+                                        <option value="1">Peruana</option>
+                                        <option value="2">Colombiana</option>
+                                        <option value="3">Venezolana</option>
+                                        </select>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$tprovin.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtprov" name="txtprov" aria-describedby="codigoHelp" placeholder="Pronvincia" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tcanton.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtcanton" name="txtcanton" aria-describedby="codigoHelp" placeholder="Canton" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tparroquia.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtparroquia" name="txtparroquia" aria-describedby="codigoHelp" placeholder="Parroquia" required>
+                                    </td></tr></table>
+                                    ';
+                                    ?> 
+                                </form>
+
+                            <!-- FIN DATOS PERSONALES-->
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                            <!-- datos residencia -->
+                            <form id="frmresidencia">
+                                    <?php
+                                    echo '<table class="table"><tr><td>
+                                    <label for="lblnombre">'.$tprovin.':</label>
+                                    <input type="text" class="form-control" id="txtprovin" name="txtprovin"  placeholder="Provincia" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tcanton.':</label>
+                                    <input type="text" class="form-control" id="txtcan" name="txtcan" aria-describedby="codigoHelp" placeholder="Canton" required>  
+                                    </td></tr><tr><td>
+                                    <label for="lblnombre">'.$tparroquia.':</label>
+                                    <input type="text" class="form-control" id="txtparr" name="txtparr" aria-describedby="codigoHelp" placeholder="Parroquia" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tcalleprin.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtcalle" name="txtcalle" aria-describedby="codigoHelp" placeholder="Calle principal" required>
+                                    </td><td></td></tr>
+                                    <tr><td><label for="lblnombre">'.$tnumero.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtnumviv" name="txtnumviv" aria-describedby="codigoHelp" placeholder="Numero residencia" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tcallesecu.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtcallsec" name="txtcallsec" aria-describedby="codigoHelp" placeholder="Calle secundaria" required>
+                                    </td></tr><td>
+                                    <label for="lblnombre">'.$tbarrio.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtbarrio" name="txtbarrio" aria-describedby="codigoHelp" placeholder="Barrio" required>
+                                    </td><td></td></tr>
+                                    <tr><td colspan="2">
+                                    <label for="lblnombre">'.$treferencia.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtref" name="txtref" aria-describedby="codigoHelp" placeholder="Referencia vivienda" required>
+                                    </td></tr></table>';
+                                    ?>
+                            <!-- fin datos residencia -->
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="messages">
+                            <form id="frmadicionales">
+                            <!--DATOS ADICIONALES-->
+                                    <?php
+                                    echo '<table class="table"><tr><td>
+                                        <label for="lblnombre">'.$tauoidentifi.':</label>
+                                        <select type="select" class="form-control" id="txtautoiden" name="txtautoiden">
+                                            <option value="0">No identificado</option>
+                                            <option value="1">Tipo1</option>
+                                            <option value="2">Tipo2</option>
+                                        </select>
+                                    </td><td>
+                                        <label for="lblnombre">'.$tnacetpueblo.':</label>
+                                        <select type="select" class="form-control" id="txtnacionalidad" name="txtnacionalidad">
+                                            <option value="0">No identificado</option>
+                                            <option value="1">Nacionalidad1</option>
+                                            <option value="2">Nacionalidad2</option>
+                                        </select>
+                                    </td></tr>
+                                    <tr><td>
+                                        <label for="lblnombre">'.$tniveledu.':</label>
+                                        <select type="select" class="form-control" id="txtniveledu" name="txtniveledu">
+                                            <option value="0">No identificado</option>
+                                            <option value="1">Primaria</option>
+                                            <option value="2">Secundaria</option>
+                                            <option value="3">Superior</option>
+                                            <option value="4">Cuarto Nivel</option>
+                                            <option value="5">Doctorado</option>
+                                        </select>
+                                    </td><td>
+                                        <label for="lblnombre">'.$testadoniveled.':</label>
+                                        <select type="select" class="form-control" id="txtestadonivel" name="txtestadonivel">
+                                            <option value="0">No identificado</option>
+                                            <option value="1">Estado 1</option>
+                                            <option value="2">Estado 2</option>
+                                        </select>
+                                    </td></tr>
+                                    <tr><td><label for="lblnombre">'.$tocupaprofe.':</label>
+                                    <input type="text" class="form-control" id="txtocuprofe" name="txtocuprofe" aria-describedby="codigoHelp" placeholder="Profesión u ocupación" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tempresatraba.':</label>
+                                    <input type="text" class="form-control" id="txtempresalab" name="txtempresalab" aria-describedby="codigoHelp" placeholder="Trabajo" required>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$ttiposeguro.':</label>
+                                    <input type="text" class="form-control" id="txttiposeguro" name="txttiposeguro" aria-describedby="codigoHelp" placeholder="Tipo de seguro" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tdiscapcidad.':</label><br>
+                                    <div class="col-xs-6">
+                                    <div class="range">
+                                        <input type="range" id="txtdiscapacidad" name="txtdiscapacidad" min="0" max="100" step="10" onchange="range.value=value">
+                                        <output id="range">0</output>
+                                    </div>
+                                    </div>
+                                 
+                                    </td></tr></table>';
+                                    ?>
+                            <!-- fin datos adicionales -->
+                            </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="settings">
+                            <!--DATOS contacto-->
+                            <form id="frmcontacto">
+                            <?php
+                            echo '<table class="table"><tr><td>
+                            <label for="lblnombre">'.$tcasonece.':</label>
+                            <input type="text" autocomplete="off" id="txtcasone" name="txtcasone" class="form-control" placeholder="En caso de emergencia llamar a" required>
+                            </td><td>
+                            <label for="lblnombre">'.$tparente.':</label>
+                                <select type="select" class="form-control" id="txtparen" name="txtparen">
+                                    <option value="0">No definido</option>
+                                    <option value="1">Padres</option>
+                                    <option value="2">Hermanos</option>
+                                    <option value="3">Esposo(a)</option>
+                                    <option value="4">Pareja</option>
+                                    <option value="5">Amigo</option>
+                                    <option value="6">Vecino</option>
+                                    <option value="7">Conocido</option>
+                                </select>
+                            </td></tr>
+                            <tr><td>
+                            <label for="lblnombre">'.$tgtelefono.':</label>
+                            <input type="text" autocomplete="off" class="form-control" id="txttel" name="txttel" aria-describedby="codigoHelp" placeholder="Teléfono" required>
+                            </td><td>
+                            <label for="lblnombre">'.$tdireccion.':</label>
+                            <input type="text" class="form-control" id="txtdirec" name="txtdirec" aria-describedby="codigoHelp" placeholder="Dirección" required>
+                            </td><td></td></tr>
+                            </table>';
+                            //pri
+                            ?>
+                            <!-- fin datos contacto -->
+                            </form>
+                        </div>
+                    </div>
+                <!--fin Tab  -->
+            </div>
+            <?php
+                echo '<table class="table"><tr align="center"><td>';
+                if (!$directo) echo $gboto->get_botonnuevop($botones[0],"limpiar(1)");
+                echo ' '.$gboto->get_guardar($botones[1],"guardar_cliente('$botones[0]')").' '.$gboto->get_eliminar($botones[2],"eliminar_cliente()").'</td></tr></table>';
+
+            ?>
+            <form id="formahis" method="post" action="">
+                <input type="hidden" autocomplete="off" id="idp" name="idp">
+            </form>
+            </div>
+        </div>
+        <script src="<?php echo $rbase ?>/pacientes.js"></script>
+        <script>
+                limpiar();
+                cita_actua('<?php echo $_SESSION['codus']; ?>');
+        </script>
+
+    <?php
+        if ($directo)  echo "<script>cargar_datos('".$directo."');</script>";
+    }
+}
+?>

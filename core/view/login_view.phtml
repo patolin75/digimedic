@@ -1,0 +1,148 @@
+<?php
+/**
+ * PHPMailer Exception class.
+ * PHP Version 8.0
+ *
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite administrar el ingreso al sitio
+ */
+class login_view{
+  public function __construct(){
+
+  }
+  
+  function presentar($ingreso,$kode,$filita,$client,$loginUrl,$result,$error){
+            include ($filita);
+                if(isset($kode)) {
+                    $kode=trim(str_replace(" ","+",$kode));
+                    $kode =decrypt($kode,leer());
+                    if ($kode=="condionaT") {
+                        echo '<script type="text/javascript"> $(function(){$("#ModalEmpresa").modal({ backdrop: "static", keyboard: false });});</script>'; 
+                        $title=$tcondiciones; 
+                    }elseif($kode =="recuperaT"){
+                        echo '<script type="text/javascript"> $(function(){$("#ModalEmpresa").modal({ backdrop: "static", keyboard: false });});</script>'; 
+                        $title=$ttrecuperar;
+                    }
+                }
+
+                if ($ingreso <>1){
+            ?>
+             <div class="degradado"></div>
+            <div class="login-fond" id="login">
+                <div class="container">
+                <div class="titulo">&nbsp&nbsp<img src="images/ba.svg"></div>
+                    <div id="login-row" class="row justify-content-center align-items-center">
+                        <div id="login-column" class="col-md-6">
+                        <div id="login-box" class="col-md-6"><br>
+                                    <h3 class="text-center text-info"><?php echo strtoupper($titule); ?></h3>
+                                    <h5 class="text-center text-info">SISTEMA DE GESTiÓN MÉDICA</h5>
+                                    <hr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <?php 
+                                        echo '<a type="button" class="btn btn-default" href="'.$client->createAuthUrl().'"><img src="images/google.png"> Google</a>&nbsp;&nbsp;';
+                                        echo '<a type="button" class="btn btn-default" href="'.htmlspecialchars($loginUrl).'"> <img src="images/face.png"> Facebook</a>';
+                                    ?>
+                                    <form id="logForm" class="form" action="?" method="post">
+                                    <hr>
+                                    <div class="form-group">
+                                        <input autocomplete="off" id="txtuserc" name="txtuserc" placeholder="<?php echo $user; ?>" class="form-control" maxlength="15" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input autocomplete="off" type="password" name="txtpasswordc" id="txtpasswordc" placeholder="<?php echo htmlentities($tpass,ENT_QUOTES,'utf-8') ?>" class="form-control" maxlength="15" required>
+                                       
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="btn btn-info btn-block" type="submit" value="<?php echo htmlentities($ingresa,ENT_QUOTES,'utf-8'); ?>">
+                                    </div>
+                                </form>
+                                <br> <a href='?kode=0+C4ppnhtdWd'><?php echo $tcondiciones ?></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href='?kode=4tatt6DXudWd'><?php echo $trecupera ?></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">&nbsp&nbsp</div>
+            <div class="container required"><small class="form-text "><b>Sitio requiere Javascript, navegadores Chrome v.88, Firefox v.87, Edge v.88 y Safari v.14 o superiores.</b></small></div>
+
+                </div>
+                
+            </div>
+    <?php
+            }elseif ($ingreso==1){
+    ?>
+            <div id="login">
+                <div class="container">
+                    <div class="titulo">&nbsp&nbsp<img src="images/ba.jpg"></div>
+                        <div id="login-row" class="row justify-content-center align-items-center">
+                            <div id="login-column" class="col-md-6">
+                                <div id="login-box" class="col-md-6">
+                                    <br><br><br><br><br>
+                                <div id="contenedor">
+                                Estamos validando, por favor espere...
+                                <div class="preloader" id="preloader"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <?php
+            }
+            if ($error>0)  echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">x</button><strong>Error! </strong> Información ingresada no es correcta, o su usuario no esta activo.</div>';
+
+            if ($result==1) 
+                echo '<div class="alert alert-success"><strong>Acción!</strong> registro no habilitado.</div>';
+            elseif($result==2)
+                echo '<div class="alert alert-danger"><strong>Alerta!</strong> Se produjo un error en el proceso, por favor intente nuevamente.</div>';
+            elseif($result==3)
+                echo '<div class="alert alert-danger"><strong>Alerta!</strong> Se generaron problemas en el envío de la notificación a su correo.</div>';
+            elseif($result==4)
+                echo '<div class="alert alert-success"><strong>Acción!</strong> Se envió la información solicitada, por favor revise su correo electrónico.</div>';
+            elseif($result==5)
+                echo '<div class="alert alert-danger"><strong>Acción!</strong> Usted tiene un ingreso al sistema por medio de Google o Facebook, no puede recuperar en el sistema.</div>';
+
+    ?>
+            <!-- Modal -->
+            <form id="frmregistro" autocomplete="false" action="?" method="post" enctype="multipart/form-data"> 
+              <div class="modal <?php echo htmlentities($full, ENT_QUOTES,  'utf-8') ?> fade in" id="ModalEmpresa" tabindex="-1" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" onclick="location.href='?kode='" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h5 class="modal-title" id="exampleModalLongTitle"><?php if (isset($title)) echo htmlentities($title, ENT_QUOTES,  'utf-8'); ?></h5>
+                    </div>
+                    <div class="modal-body table-responsive">  
+                        <?php 
+                          if (isset($kode)){
+                               if ($kode=="recuperaT"){
+                                    echo $tmensajere.'<br><br>';
+                                    echo $tmail.':<input autocomplete="off" class="form-control" id="txtmailre" name="txtmailre" required>';
+                                }elseif ($kode=="condionaT"){
+                                    echo "<h4>".$titucdeuso."</h4>";
+                                    echo '<div style="height: 350px; overflow-y: scroll; text-align: justify">'.$cdeuso.'</div>';
+                                }
+                          }
+                        ?>
+                        <div id="form_errors"  style="display:none"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <label style="justify-content: center; display: flex; display: none;" id="lblsolicitud">Estamos procesando su solicitud...</label>
+                      <button type="button" id="btncerrar" class="btn btn-secondary" onclick="location.href='?kode='"><?php echo $bcerrar ?></button>
+                      <?php if (isset($kode)){
+                                 if ($kode=="register") $texto=$bregistra; else $texto=$brecupera;
+                                 if ($kode=="recuperaT") echo '<button id="btnregistra" type="submit" onclick="presentar()" class="btn btn-primary"> '.$benviar.'</button>'; 
+                            } ?>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+<?php    
+    }
+}?>

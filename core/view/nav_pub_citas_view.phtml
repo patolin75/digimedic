@@ -1,0 +1,82 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class nav_pub_citas_view{
+    public function __construct(){
+
+    }
+
+    function visualizaNap($lenguaje,$boton,$clases,$foto,$vertodo,$publici){
+        if (file_exists($lenguaje)) include ($lenguaje);
+?>
+
+<div class="row">
+      <div class="col-md-3">
+         <div class="paginita" id="paginar"> 
+        </div>  
+     </div>
+</div>
+        <div class="row container-logo">
+            <div class="col-md-3">
+                <div class="picture-container_citas">
+                    <div class="picture_citas col-5">
+                        <?php echo '<img src="'.$foto[0].'" class="picture-src" id="wizardPicturePreview" title=""/>'; ?>
+                    </div>   
+                </div>
+            </div>
+            <div class="col-md-6 titutlo-empresa"><br><?php echo $foto[1]; ?></div>
+            <div class="col-md-3 titutlo-empresa" id="fechor"></div>
+        </div>
+        <input type="hidden" class="form-control" id="txtins" name="txtins" value="<?php echo $_SESSION['institucion'];?>">
+        <input type="hidden" class="form-control" id="txtver" name="txtver" value="<?php echo $vertodo ?>">
+        <div class="d-flex panel-default">
+                <table class="table-condensed">
+					<thead>
+						<tr class="header">
+							<th>ESPECIALISTA</th>
+							<th>PACIENTE</th>
+							<th class="col-sm-2">HORA</th>
+						</tr>
+					</thead>
+                </table>
+        </div>
+
+        <div class="div-table-content">
+            <table class="table table-condensed">
+                <tbody id="table-cont" name="table-cont">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <div class="animation">
+                <?php
+                    $i=1;
+                    foreach($publici as $fotos){
+                        $imagen = base64_encode($fotos['imagenes']);
+                        $foto= "data:image/jpg;charset=utf8;base64,".$imagen;
+                        echo '<img class="img invisible" src="'.$foto.'" id="img'.$i.'">';
+                        $i++;
+                    }
+                ?>
+            </div>
+        </div>
+
+        <script src="<?php echo $rbase ?>/nav_pub.js"></script>
+        <script>
+            
+            fecha_hora();
+            recupera_citas();
+        </script>
+<?php
+    }
+
+}
+?>

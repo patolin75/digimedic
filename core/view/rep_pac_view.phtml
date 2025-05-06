@@ -1,0 +1,94 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class rep_pacientes_view{
+    public function __construct(){
+
+    }
+
+    function visualizaRepp($lenguaje,$botones,$clases,$clientes){
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+?>
+
+
+<div class="container">
+                <div class="desarrollo justify-content-center">
+                <?php
+                    if ($accion >0){
+                        echo $gboto->tiempos();
+                    }
+                ?>
+                <div class="titlepag"><blockquote><i class="fa fa-folder fa-lg"></i> <?php echo $trepac ?></blockquote></div>
+                    
+                    <hr>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                                <div class="table-responsive">
+                                <?php echo $gboto->get_botonnuevo($boton[0],"ventana(0)"); ?>
+                                <br>
+                                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th><?php echo $titu1 ?></th>
+                                        <th><?php echo $titu2 ?></th>
+                                        <th><?php echo $titu3 ?></th>
+                                        <th><?php echo $titu4 ?></th>
+                                        <th><?php echo $titu5 ?></th>
+                                        <th><?php echo $tgacciones ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    if ($clientes){
+                                        foreach ($clientes as $campos){
+                                                $llamado= "ver_mas('".$campos['id_cliente']."')";
+                                                echo '<tr><td>'.$campos['clientes_identificacion'].'</td><td>'.htmlentities($campos['clientes_nombres'], ENT_QUOTES,  'utf-8').'</td><td>'.htmlentities($campos['clientes_apellidos'], ENT_QUOTES,  'utf-8').'</td><td>'.htmlentities($campos['clientes_telefono'], ENT_QUOTES,  'utf-8').'</td><td>'.htmlentities($campos['clientes_email'], ENT_QUOTES,  'utf-8').'</td><td>'.$gboto->get_boton(1,"Ver mas",$llamado,1).'</td></tr>';
+                                        }
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                                </div>
+                    </div>
+                    </div><div class="separar"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+<!-- Modal -->
+    <div class="modal fade in" id="ModalEmpresa" tabindex="-1" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $tventanre ?></h5>
+            </div>
+                <div class="modal-body table-responsive">
+
+                        aqui detalle
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button>
+          </div>
+        </div>    
+      </div>
+    </div>
+
+    <script src="<?php echo $rbase ?>/rep_pacientes.js"></script>
+
+<?php
+    }
+
+}

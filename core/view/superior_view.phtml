@@ -1,0 +1,200 @@
+<?php 
+/**
+ * class.
+ * PHP Version 8.0.
+ *
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu superior del aplicativo
+ */
+
+class superior_view{
+      public function __construct(){
+
+      }
+
+    function letras($numero){
+        switch ($numero) {
+            case 0:
+                return "cero";
+                break;
+            case 1:
+                return "uno";
+                break;
+            case 2:
+                return "dos";
+                break;
+            case 3:
+                return "tres";
+                break;
+            case 4:
+                return "cuatro";
+                break;
+            case 5:
+                return "cinco";
+                break;
+            case 6:
+                return "seis";
+                break;
+            case 7:
+                return "siete";
+                break;
+            case 8:
+                return "ocho";
+                break;
+            case 9:
+                return "nueve";
+                break;
+            case 10:
+                return "diez";
+                break;
+        }
+    }
+      
+    function presentar($resulta,$open,$id,$sub,$pri,$institucion,$menus,$permisos,$filita){
+        if (file_exists($filita)) include ($filita);
+        if ($pri=='f') echo '<script type="text/javascript"> $(function(){$("#Modaluserconfig").modal({ backdrop: "static", keyboard: false });});</script>'; 
+?>
+            <script src="<?php echo $rbase ?>/superior.js"></script>
+           <!-- <div class="bordesup">
+            </div>-->
+            <div class="menusup" id="menusup">
+                <?php
+                    if (is_array($institucion)) {
+                        foreach ($institucion as $valores) {
+                            $imagin= '<img src="'.$valores['logo'].'" style="height:80px;" />&nbsp;&nbsp;';
+                            $nomins=$valores['name_institucion'];
+                        }
+                    }else{
+                        $imagin='<img src="images/empresa/ba.svg" style="height:80px;" />&nbsp;&nbsp;';
+                        $nomins= strtoupper('<label style="font-size:35px;">'.$titule.'</label>');
+                    }
+                    //Colocar logo y titulo
+                        echo '<li class="nav-items">';
+                            echo '<a class="nav-link dropdown-toggle navbar-text" data-toggle="dropdown" href="#" style="color: white;  font-size:13px;"> '.strtoupper(htmlentities($_SESSION['usernc'])).'</a>';
+                            if (strlen($_SESSION['foto_us'])>0)
+                                    echo '<img class="img-profile rounded-circle" src="'.$_SESSION['foto_us'].'">';
+                            else echo '<img class="img-profile rounded-circle" src="images/foto.jpg">';
+                            
+                            echo '<div class="dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="userDropdown">';
+                            if ($_SESSION['tipous'] ==2){
+                                //$linkp="&kode=".encrypt('id='.$id.'&sub='.$sub.'&pri=f',leer());
+                                $linkp = "javascript:ventanita()";
+                                echo '<a class="dropdown-item" href="'.$linkp.'"><i class="fa fa-cog"></i>'.htmlentities($tperfil, ENT_QUOTES,  'utf-8').'</a>';
+                                echo '<div class="dropdown-divider"></div>';
+                            }
+                            echo '<a class="dropdown-item" href="?exit=@3er56"><i class="fa fa-cog"></i>'.$tsalir.'</a></div>';
+                        echo '</li>';
+                   
+                        echo '<div class="insnom">'.$titule.'
+                                    &nbsp | &nbsp 
+                                    <a class="nav-link" href="#">
+                                    <i class="fa fa-bell">
+                                        <label class="badge" id="contadorcita"></label>
+                                    </i>
+                                    </a>
+                                    &nbsp 
+                                    <a class="nav-link" href="#">
+                                    <i class="fa fa-envelope-o">
+                                        <label class="badge" id="contadormsg"></label>
+                                    </i>
+                                    </a>
+                        </div>';
+
+                        echo '<div class="allmenu">';
+                        $f=0;
+                        foreach($menus as $menudiz){
+                            if ($permisos){
+                                foreach($permisos as $permisito){
+                                    if ($permisito['id_menus']==$menudiz['id_menus']){
+                                        if (strlen($menudiz['menu_imagen'])>0 && strpos($menudiz['menu_imagen'], "."))
+                                            $img= '<img class="img-profile" src="images/menu/'.$menudiz['menu_imagen'].'">';
+                                        else //fa-2x
+                                            $img= '<br><center> <i class="fa-2x fa '.$menudiz['menu_imagen'].'"></i></center>';
+
+                                        $menupri = $menudiz['id_menus'];
+
+                                        echo '<div class="'.self::letras($f).'">';
+                                                echo '<span class="sidebar-icon">'.$img.'</span>';
+                                        echo '<div class="texto">'.strtoupper($menudiz['menus_nombre']).'</div>
+                                                <div class="barra texto submenus_'.self::letras($f).'">';
+                                                $i=0;
+                                                $largo=10;
+                                                foreach($permisos as $permisito){
+                                                    if ($menupri == $permisito['menus_principal'] && $permisito['menus_principal'] >0){
+                                                        if (strlen($permisito['menu_imagen'])>0 && strpos($permisito['menu_imagen'], "."))
+                                                            $image= '<img class="img-profile" src="images/menu/'.$permisito['menu_imagen'].'">';
+                                                        else
+                                                            $image= '<i class="fa '.$permisito['menu_imagen'].'"></i>';
+                                                        $largo = $largo +13;
+                                                        echo '<a id="link" href="?open='.encrypt(htmlentities($permisito['link'],ENT_QUOTES,'utf-8'),leer()).'&kode='.encrypt('id='.$id.'&sub='.$permisito['id_menus'],leer()).'"> '.$image.' '.strtoupper($permisito['menus_nombre']).'</a><br>';
+                                                        $i++;
+                                                    }
+                                                }
+                                                $largo = $largo *2;
+                                        echo '<script>$(".submenus_'.self::letras($f).'").css("height", "'.$largo.'px")</script>';
+                                        echo '</div></div> &nbsp;&nbsp;';
+                                        $menupri = $menudiz['id_menus'];
+                                    }
+                                }
+                                $f++;
+                            }
+                        }
+                        echo '</div>';
+                    ?>
+            </div>
+
+            <div class="menuiz text-center" id="menuiz">
+                <?php
+                    if (strlen($nomins)>30) $nomins = substr($nomins,0,30).'..';
+                    echo $imagin.'<label style="font-size:12px; color:#0069A6;"><div class="">'.$nomins.'</div></label>'; //AQUI
+                ?>
+            </div>
+                    <?php 
+                        $linkp="&kode=".encrypt('id='.$id.'&sub='.$sub.'&pri=f',leer()); 
+                        $linkp1= "?open=".htmlentities($open, ENT_QUOTES,  'utf-8')."&kode=".encrypt('id='.$id.'&sub='.$sub.'&pri=',leer());
+                    ?>
+                    <!-- FORM MODAL -->
+                <form action="?<?php echo "open=".htmlentities($open.$linkp, ENT_QUOTES, 'utf-8') ?>" method="post" enctype="multipart/form-data">  
+                    <div class="modal fade in" id="Modaluserconfig" tabindex="-1" role="dialog" aria-labelledby="ModalconfigTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close"  onclick="location.href='<?php echo $linkp1 ?>'" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $ttrecuperar ?> </h5>
+                            </div>
+                            <div class="modal-body table-responsive">
+                                <?php
+                                echo $tgcodempre.':<input class="form-control" id="txtcedulas" name="txtcedulas" value="'.$_SESSION['codus'].'"  required readonly>';
+                                echo '<hr>';
+                                echo '<b>'.$trecuede.'</b><br><br>';
+                                echo $user.':<input class="form-control"  id="txtuseru" name="txtuseru" value="'.$_SESSION['usernc'].'" required readonly>';
+                                echo $tpassant.':<input autocomplete="off" type="password" class="form-control"  id="txtpassan" name="txtpassan" maxlength="15" required>';
+                                echo $tpass.':<input autocomplete="off" type="password" class="form-control"  id="txtpasswa" name="txtpasswa" maxlength="15" required>';
+                                echo $treingreso.':<input autocomplete="off" type="password" class="form-control"  id="txtpasr" name="txtpasr" maxlength="15" required>';
+                                //RESULTADOS
+                                if ($resulta==1){
+                                    echo '<br><div class="alerta alert-success"> <button type="button" class="close" data-dismiss="alert">x</button> <strong>Acción! </strong> Se ejecutó el proceso solicitado.</div>';
+                                } elseif ($resulta==2){
+                                    echo '<br><div class="alerts alert-danger"><button type="button" class="close" data-dismiss="alert">x</button><strong>Error! </strong> la contraseña anterior no coincide.</div>';
+                                }
+                                echo '<div id="form_errorsu"  style="display:none"></div>';
+                                ?>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" onclick="location.href='<?php echo $linkp1 ?>'" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button>
+                                <button type="submit" id="btnregistra" name="btnregistra" class="btn btn-primary"><?php echo $bguardar ?></button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+
+<?php }
+}?>

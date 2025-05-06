@@ -1,0 +1,260 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+
+class exa_view{
+    public function __construct(){
+
+    }
+
+    function visualizaView ($clases,$configura,$pacientes,$botones,$especia,$examenes,$idinstitu){
+        if (file_exists($configura)) include ($configura);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+
+        echo $gboto->get_mensajes();
+    ?>
+    <link rel="stylesheet" href="js/editor/themes/default.min.css" id="theme-style" />
+    <script src="js/editor/sceditor.min.js"></script>
+    <script src="js/editor/icons/monocons.js"></script> 
+
+
+    <link rel='stylesheet prefetch' href='css/bootstrap-select.min.css'>
+    <script src="js/bootstrap-select.min.js"></script>
+
+
+<div class="container">
+    <div class="desarrollo">
+            <div class="titlepag"><blockquote><i class="fa fa-folder fa-lg"></i> <?php echo $texam ?></blockquote></div>
+            
+                <table class="table">
+                    <tr><td>
+                        <div id="divbuscador">
+                                <form id="frmbuscador"> 
+                                <?php 
+                                    echo ' <div class="well text-rigth"><h4>'.$tpacientes.':</h4>
+                                            <select id="selexamen" name="selexamen" onchange="cargar_examenes(this.value)" class="selectpicker show-menu-arrow" 
+                                            data-style="form-control" 
+                                            data-live-search="true" 
+                                            title="Pacientes">
+                                                <option data-tokens value="0">Ninguno</option>';
+                                                foreach ($pacientes as $valus){
+                                                    echo '<option data-tokens value="'.$valus['id_cliente'].'">'.$valus['clientes_identificacion'].' - '.$valus['clientes_nombres'].' '.$valus['clientes_apellidos'].'</option>';
+                                                }
+                                        echo '</select></div>';
+
+                                    echo'<div class="dual-list list-left0">
+                                            <div class="well text-left0">
+                                                <h4>'.$tpendiente.':</h4>
+                                                <div class="row">
+                                                    <div class="col-md-8">                                    
+                                                        <div class="input-group">
+                                                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-group" id="examenes">';
+                                                        foreach ($examenes as $valores)
+                                                            echo '<li id="liexamenes" class="list-group-item"> <input class="form-check-input me-1 slecttwo"  type="checkbox" value="'.$valores['id'].'"> Cod: '.$valores['id'].' Fecha: '.$valores['fechaped'].'</li>';   
+                                            echo '</ul>';
+                                echo '</div>
+                                </div>';
+                            ?>
+                            </form>
+                        </div>
+
+                </td><td>
+
+                <div class="card">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><?php echo $tinfor ?></a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><?php echo $tdatoespec ?></a></li>
+                        <li role="presentation" id="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><?php echo $tresultados ?></a></li>
+                    </ul>
+
+                <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home" name="home">
+                            <!-- quien agenda citas -->
+                                <?php
+                                    echo '<div class="row"><div class="col-xs-8">'.$tfecregis.': <label id="fregistro" name="fregistro"> </label></div></div>
+                                    <input type="hidden" autocomplete="off" id="txtinst" name="txtinst" value="'.$idinstitu.'">';
+                                    
+                                ?>
+                                <form id="frmdatos">
+                                    <?php 
+                                    echo '<table class="table"><tr><td>
+                                    <label for="lblnombre">'.$tnumdoc.':</label>
+                                    <input type="hidden" autocomplete="off" id="idpac" name="idpac" value="0">
+                                    <input type="text" autocomplete="off" id="txtced" name="txtced" class="form-control" placeholder="Identificacion paciente" required>
+                                    </td><td><br></td><td rowspan="3" align="center">
+                                        <div class="picture-container">
+                                            <div class="picture">
+                                                <img src="'.$foto.'" class="picture-src" id="wizardPicturePreview" title=""/>
+                                                <input type="file" id="wizard-picture" id="wizard-picture" accept=".jpg, .png, .jpeg, .svg .pdf .doc">
+                                            </div>
+                                            <h6>Cambiar foto</h6>
+                                            </div>
+                                            <input type="hidden" class="form-control" id="txtimage" name="txtimage">
+                                        </div>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$tapellidos.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtapellidos" name="txtapellidos" aria-describedby="codigoHelp" placeholder="Apellidos paciente" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tnombres.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtnombres" name="txtnombres" aria-describedby="codigoHelp" placeholder="Nombres paciente" required>
+                                    </td><td></td></tr>
+                                    <tr><td><label for="lblnombre">'.$tgtelefono.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="dtxttelefono" name="txttelefono" aria-describedby="codigoHelp" placeholder="Telefono paciente" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tmail.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtmail" name="txtmail" aria-describedby="codigoHelp" placeholder="Email paciente" required>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$ttiposangre.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtiposangre" name="txtiposangre" aria-describedby="codigoHelp" placeholder="Tipo de sangre" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$testadoci.':</label>
+                                        <select class="form-control custom-select my-1 mr-sm-2" id="txtestadociv" name="txtestadociv" required>
+                                                <option value="0">Soltero(a)</option>
+                                                <option value="1">Casado(a)</option>
+                                                <option value="2">Divorciado(a)</option>
+                                                <option value="3">Unióm libre</option>
+                                        </select>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tsexo.':</label>
+                                        <select class="form-control custom-select my-1 mr-sm-2" id="txtsexo" name="txtsexo" required>
+                                            <option value="0">Masculino</option>
+                                            <option value="1">Femenino</option>
+                                        </select>
+                                    </td></tr>
+                                    <tr><td>
+                                    <label for="lblnombre">'.$tfechanac.':</label>
+                                    <input type="date" autocomplete="off" class="form-control" id="txtfechanac" name="txtfechanac" aria-describedby="codigoHelp" placeholder="Fecha de nacimiento" required>
+                                    </td>
+                                    <td>
+                                    <label for="lblnombre">'.$tedad.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtedad" name="txtedad" aria-describedby="codigoHelp" placeholder="Edad" readonly required>
+                                    </td>
+                                    <td>
+                                    <label for="lblnombre">'.$tnaciona.':</label>
+                                        <select class="form-control custom-select my-1 mr-sm-2" id="txtnaciona" name="txtnaciona" required>
+                                        <option value="0">Ecuatoriana</option>
+                                        <option value="1">Peruana</option>
+                                        <option value="2">Colombiana</option>
+                                        <option value="3">Venezolana</option>
+                                        </select>
+                                    </td></tr>
+
+                                    <tr><td>
+                                    <label for="lblnombre">'.$tprovin.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtprov" name="txtprov" aria-describedby="codigoHelp" placeholder="Pronvincia" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tcanton.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtcanton" name="txtcanton" aria-describedby="codigoHelp" placeholder="Canton" required>
+                                    </td><td>
+                                    <label for="lblnombre">'.$tparroquia.':</label>
+                                    <input type="text" autocomplete="off" class="form-control" id="txtparroquia" name="txtparroquia" aria-describedby="codigoHelp" placeholder="Parroquia" required>
+                                    </td></tr></table>
+                                    ';
+                                    ?> 
+                                </form>
+                    <!-- fin agenda citas -->
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                                <form id="frmexsol" method="post">
+                                        <?php
+                                            echo'<div class="row"><div class="col-xs-8">'.$trecepta.': <label id="lblrecepta" name="lblrecepta"> </label></div></div>
+                                            <table class="table"><tr><td colspan=2>
+                                            <input type="hidden" autocomplete="off" id="idexma" name="idexma" value="0">
+                                            <input type="hidden" autocomplete="off" id="idespe" name="idespe" value="0">
+                                            <label for="lblnombre">'.$tespecialita.':</label>
+                                                <select name="cmbmedic" id="cmbmedic" onchange="carga_med(this)" class="selectpicker show-menu-arrow" 
+                                                data-style="form-control" 
+                                                data-live-search="true" 
+                                                title="Especialistas internos">';
+                                                echo '<option data-tokens value="0">Ninguno</option>';
+                                                foreach($especia as $valo){
+                                                    echo '<option data-tokens value="'.$valo['id_usuarios'].'">'.$valo['apellidos_usuarios'].' '.$valo['nombres_usuarios'].'</option>';
+                                                }
+
+                                                echo '</select>
+                                                </td></tr><tr><td>
+                                                <label for="lblnombre">'.$tapellidos.':</label>
+                                                <input type="text" autocomplete="off" class="form-control" id="txtapellidoses" name="txtapellidoses" aria-describedby="codigoHelp" placeholder="Apellidos especialista" required>
+                                                </td><td>
+                                                <label for="lblnombre">'.$tnombres.':</label>
+                                                <input type="text" autocomplete="off" class="form-control" id="txtnombreses" name="txtnombreses" aria-describedby="codigoHelp" placeholder="Nombres especialista" required>
+                                                </td><td></td></tr>
+                                                <tr><td><label for="lblnombre">'.$tgtelefono.':</label>
+                                                <input type="text" autocomplete="off" class="form-control" id="dtxttelefonoes" name="txttelefonoes" aria-describedby="codigoHelp" placeholder="Telefono especialista" required>
+                                                </td><td>
+                                                <label for="lblnombre">'.$tmail.':</label>
+                                                <input type="text" autocomplete="off" class="form-control" id="txtmailes" name="txtmailes" aria-describedby="codigoHelp" placeholder="Email especialista" required>
+                                                </td></tr>
+                                                <tr><td colspan=2><label for="lblnombre">'.$tinforsol.':</label>
+                                                </td></tr>
+                                                <tr><td colspan=2>
+                                                        <textarea id="txtmsg1"></textarea>
+                                                </td></tr>
+                                                </table>';
+                                            ?>
+                                    </form>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="messages">
+                        <!-- archivos -->
+                                <table class="table table-striped"><tr><td>
+                                    <div id="actions" class="row botonsubir">
+                                            <span class="btn btn-success fileinput-button">
+                                                <i class="glyphicon glyphicon-plus"></i>
+                                                <span><?php echo $tfiles; ?></span>
+                                            </span>
+                                            <?php echo $tformatos; ?>
+                                    </div>
+                                    <div class="fallback">
+                                        <input name="fileexa" id="fileexa" type="file"  accept=".jpg, .jpeg, .png, .svg, .doc, .pdf, .docx" multiple/>
+                                    </div>
+                                    </td></td><tr><td>
+                                    <strong class="error text-danger" id="errorsub" data-dz-errormessage></strong>
+                                    <div class="table table-striped files" id="previews">
+                                    </div>
+                                    </td></tr>
+                                </table>
+                                <label><?php echo $tobservaciones; ?></label>
+                                <!-- observaciones -->
+                                <textarea id="txtmsg"></textarea>
+                                <!--fin observaciones -->
+                        <!-- fin de archivos -->
+                        </div>
+                </div>
+            </div>
+    <script>
+       $('.selectpicker').selectpicker({
+            style: 'btn-default'
+        });
+    </script>
+
+    <?php
+             echo '<table class="table"><tr align="center"><td>';
+            echo $gboto->get_botonnuevop($botones[0],"limpiar(); limpiar_exam(1);").' '.$gboto->get_guardar($botones[1],"guardar_datos()").' '.$gboto->get_eliminar($botones[2],"eliminar_exa()").
+        '</td></tr></table>';
+    ?>
+                </td></tr>
+            </table>
+    </div>
+</div>
+<script src="<?php echo $rbase ?>/exacli.js"></script>
+<?php
+    }
+}
+?>

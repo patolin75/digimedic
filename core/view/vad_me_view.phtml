@@ -1,0 +1,104 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+
+class vademecum_view{
+    public function __construct(){
+
+    }
+
+    function visualizaVade ($clases,$configura,$botones,$vademecum,$boton,$accion,$open,$id,$sub){
+        if (file_exists($configura)) include ($configura);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+
+        echo $gboto->get_mensajes();
+    ?>
+
+        <div class="">
+                <div class="desarrollo">
+                <?php
+                    if ($accion >0){
+                        echo $gboto->tiempos();
+                    }
+                ?>
+                <div class="titlepag"><blockquote><i class="fa fa-folder fa-lg"></i> <?php echo $tventana ?></blockquote></div>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                            <div class="table-responsive">
+                                <?php echo $gboto->get_botonnuevo($boton[0],"ventana(0)"); ?>
+                                <br>
+                                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th><?php echo $tnombre ?></th>
+                                        <th><?php echo $tadmin ?></th>
+                                        <th><?php echo $tgacciones ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    if ($vademecum){
+                                        foreach ($vademecum as $campos){
+                                                $llamado= "ventana('".$campos['id_vademecum']."')";
+                                                $llamado1="Borrar('".$campos['id_vademecum']."')";
+                                                echo '<tr><td>'.$campos['vademecum_nombreprod'].'</td><td>'.htmlentities($campos['vademecum_administracion'], ENT_QUOTES,  'utf-8').'</td><td>'.$gboto->get_botonesgrid($boton[1],$boton[2],"$llamado","$llamado1").'</td></tr>';
+                                        }
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<!-- Modal -->
+    <div class="modal fade in" id="ModalEmpresa" tabindex="-1" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            <form action="?open=<?php echo encrypt($open,leer()) ?>&kode=<?php echo encrypt('id='.$id.'&sub='.$sub,leer()) ?>" method="post" enctype="multipart/form-data">  
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $tventana ?></h5>
+            </div>
+                <div class="modal-body table-responsive" id="frmvade" name="frmvade">
+                        <?php echo '<label for="lblcodigo">'.$tgcodempre.':</label>
+                        <input type="text" class="form-control" id="txtcodigo" name="txtcodigo" aria-describedby="codigoHelp" placeholder="Campo solo lectura" readonly>
+                        <label for="lblnombre">'.$tregsan.':</label>
+                        <input type="text" class="form-control" id="txtregsan" name="txtregsan" aria-describedby="codigoHelp" placeholder="registro sanitario" required>
+                        <label for="lbldetalle">'.$tlab.':</label>
+                        <input type="text" class="form-control" id="txtlab" name="txtlab" aria-describedby="codigoHelp" placeholder="Laboratorio" required>
+                        <label for="lbldetalle">'.$tnombre.':</label>
+                        <input type="text" class="form-control" id="txtnombre" name="txtnombre" aria-describedby="codigoHelp" placeholder="Nombre producto" required>
+                        <label for="lblnombre">'.$tadmin.':</label>
+                        <input type="text" class="form-control" id="txtadmin" name="txtadmin" aria-describedby="codigoHelp" placeholder="Administracion" required>
+                        <label for="exampleInputEmail1">'.$tpresen.':</label>
+                        <textarea class="form-control" id="txtpresenta" name="txtpresenta" rows="3"></textarea>';?>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button><?php echo $gboto->get_guardar(1,"") ?>
+          </div>
+        </form>
+        </div>    
+      </div>
+    </div>
+
+    <?php echo $gboto->get_ventana($accion) ?>
+    <script src="<?php echo $rbase ?>/vademecum.js"></script>
+
+    <?php
+    }
+}
+?>

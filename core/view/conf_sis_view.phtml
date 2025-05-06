@@ -1,0 +1,362 @@
+<?php 
+/**
+ * class.
+ * PHP Version 8.0
+ *
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite la incripcion y seguimiento de campeonatos por parte del usuario
+ */
+class configurar_view{
+      public function __construct(){
+
+      }
+
+      function visualizaConf($lenguaje,$institu,$open,$id,$sub,$especi,$eslis,$listade,$listaiz,$clases){
+        if (file_exists($lenguaje)) include ($lenguaje);
+
+        $linkt = "?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer());
+
+        require_once($clases."botones.php");
+        $gboto = new botones();
+
+        echo $gboto->get_mensajes();
+     ?>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+    <div class="container">
+    <div class="desarrollo">
+            <div class="titlepag"><blockquote><i class="fa fa-folder fa-lg"></i> <?php echo $tcontitu ?></blockquote></div>
+                <!-- Nav tabs -->
+            <div class="card">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="<?php echo  $linkt ?>#home" aria-controls="home" role="tab" data-toggle="tab"><?php echo $trolagenda ?></a></li>
+                    <li role="presentation"><a href="<?php echo  $linkt ?>#profile" aria-controls="profile" role="tab" data-toggle="tab"><?php echo $taccagenda ?></a></li>
+                    <li role="presentation"><a href="<?php echo  $linkt ?>#messages" aria-controls="messages" role="tab" data-toggle="tab"><?php echo $tcostoespe ?></a></li>
+                    <li role="presentation"><a href="<?php echo  $linkt ?>#settings" aria-controls="settings" role="tab" data-toggle="tab"><?php echo $thorarioate ?></a></li>
+                    <li role="presentation"><a href="<?php echo  $linkt ?>#historias" aria-controls="historias" role="tab" data-toggle="tab"><?php echo $thistoconf ?></a></li>
+                </ul>
+                <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                    <!-- quien agenda citas -->
+                                <table class="table">
+                                        <tr><td>
+
+                                        <div class="dual-list list-left">
+                                            <div class="well text-left">
+                                                <div class="row">
+                                                    <div class="col-md-10">                                    
+                                                        <div class="input-group">
+                                                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" /> 
+                                                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-group">
+                                                <?php
+                                                        foreach ($especi as $valus){
+                                                            echo ' <li id="'.$valus['id_roles'].'" class="list-group-item">'.$valus['nombre_roles'].'</li>';
+                                                            
+                                                        }
+                                                ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </td><td class="col-sm-1">
+                                        <div class="list-arrows col-md-1">
+                                            <button class="btn btn-default btn-sm move-left">
+                                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                            </button>
+                                            <button class="btn btn-default btn-sm move-right">
+                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                            </button>
+                                        </div>
+                                    </td><td class="col-sm-5">
+                                        <div class="dual-list list-right">
+                                            <div class="well">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
+                                                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-group">
+                                                    <?php
+                                                        foreach ($eslis as $valus){
+                                                            echo ' <li id="'.$valus['id_roles'].'" class="list-group-item">'.$valus['nombre_roles'].'</li>';
+                                                            
+                                                        }
+                                                ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td></tr> </table>
+                    <!-- fin agenda citas -->
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+
+                    <!-- accesos -->
+                                <table class="table">
+                                <tr><td>
+                                    <div class="dual-list list-left0">
+                                    <div class="well text-left0">
+                                    <?php
+                                               // $link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
+                                                $link = "cargar_listaemp($(this),$('#filtrou'),3)";
+                                                
+                                                echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroa" name="filtroa" 
+                                                onchange="'.$link.'" required><option value="0">Seleccione</option>';
+                                                foreach ($institu as $valus){
+                                                    echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                                }
+                                                echo '  </select> '; 
+
+                                                echo  ucwords(strtolower($tvusuarios)).'<select class="form-control custom-select my-1 mr-sm-2" id="filtrou" name="filtrou" onchange="cargar_accesos($(this).val())" required>
+                                                <option value="0">Seleccione</option>';
+                                               /* foreach ($lisusuario as $valus){
+                                                    echo '<option value="'.$valus['identificacion_usuarios'].'">'.$valus['nombres_usuarios'].' '.$valus['apellidos_usuarios'].'</option>';
+                                                }*/
+                                                echo '  </select> '; 
+
+                                                //echo "<script>$('#filtroa').val(".$filtrado.");</script>";  
+                                            ?>
+                                            <hr>
+                                        <ul class="list-group" id="agendarl">
+                                        <?php
+                                                foreach ($listaiz as $valus){
+                                                    echo ' <li id="'.$valus['id_usuarios'].'" class="list-group-item">'.$valus['nombres_usuarios'].' '.$valus['apellidos_usuarios'].'</li>';
+                                                }
+                                        ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td><td class="col-sm-1">
+                                <div class="list-arrowsa col-md-1">
+                                    <button class="btn btn-default btn-sm move-left0">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </button>
+                                    <button class="btn btn-default btn-sm move-right0">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </button>
+                                </div>
+                            </td><td class="col-sm-5">
+                                <div class="dual-list list-right0">
+                                    <div class="well">
+                                        <ul class="list-group" id="agendar">
+                                            <?php
+                                                foreach ($listade as $valus){
+                                                    echo ' <li id="'.$valus['id_usuarios'].'" class="list-group-item">'.$valus['nombres_usuarios'].' '.$valus['apellidos_usuarios'].'</li>';
+                                                    
+                                                }
+                                        ?>
+                                        
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td></tr></table>
+                    <!-- fin de accesos -->
+                        </div>
+                        
+                        <div role="tabpanel" class="tab-pane" id="messages">
+                    <!-- COSTOS -->
+                            <table class="table">
+                            <tr><td>
+                            <div class="dual-list list-left">
+                                    <div class="well text-left">
+                                    <?php 
+                                            //$link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
+                                            $link = "cargar_listaemp($(this),$('#filtroe'),4)";
+                                            echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtro" name="filtro" 
+                                            onchange="'.$link.'" required><option value="0">Seleccione</option>';
+                                            foreach ($institu as $valus){
+                                                echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                            }
+                                            echo '  </select> '; 
+
+                                            echo $tespecialita.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroe" name="filtroe" onchange="listar_costos($(this).val())" required>
+                                            <option value="0">Seleccione</option>';
+                                            echo '  </select> '; 
+                                           // echo "<script>$('#filtro').val(".$filtrado.");</script>";      
+                                            echo $tipoconsulta.":";
+                                            echo '<input type="text" class="form-control" id="nconsulta" name="nconsulta" aria-describedby="emailHelp" placeholder="Nombre tipo de consulta" required>';
+                                            echo $tipovalor.":";
+                                            echo '<input type="number" class="form-control" id="valorc" name="valorc" aria-describedby="emailHelp" placeholder="Valor ejemplo: 20.5" required>';
+                                            echo $tobserva.":";
+                                            echo '<input type="text" class="form-control" id="nobserva" name="nobserva" aria-describedby="emailHelp" placeholder="Observaciones" required>';
+
+                                    ?>
+                                    </div>
+                                </div>
+                            </td><td>
+                                    <div class="list-arrowsb col-md-1">
+                                        <button class="btn btn-default btn-sm move-left1">
+                                            <span class="glyphicon glyphicon-chevron-left"></span>
+                                        </button>
+                                        <button class="btn btn-default btn-sm move-right1">
+                                            <span class="glyphicon glyphicon-chevron-right"></span>
+                                        </button>
+                                    </div>
+                            </td><td>
+                                <div class="dual-list list-right1">
+                                    <div class="well">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="input-group">
+                                                    <input type="text" name="SearchDualList1" class="form-control" placeholder="search" />
+                                                    <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="list-group" id="valores">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td></tr></table>
+                    <!--fin costos -->
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="settings">
+                         <!-- Horarios atención -->
+                                <table class="table">
+                                    <tr><td>
+                                    <div class="dual-list list-left">
+                                            <div class="well text-left">
+                                            <?php 
+                                                    //$link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
+                                                    $link = "cargar_listaemp($(this),$('#filtroeeh'),4)";
+                                                    echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroh" name="filtroh" 
+                                                    onchange="'.$link.'" required><option value="0">Seleccione</option>';
+                                                    foreach ($institu as $valus){
+                                                        echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                                    }
+                                                    echo '  </select> '; 
+
+                                                    echo $tespecialita.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroeeh" name="filtroeeh" onchange="listar_horarios($(this).val())" required>
+                                                    <option value="0">Seleccione</option>';
+                                                    echo '  </select> '; 
+                                                // echo "<script>$('#filtro').val(".$filtrado.");</script>";      
+                                                    echo $thoradesde.":";
+                                                    echo '<input type="time" class="form-control" id="thoradesde" name="thoradesde" aria-describedby="emailHelp" placeholder="Nombre tipo de consulta" required>';
+                                                    echo $thorahasta.":";
+                                                    echo '<input type="time" class="form-control" id="thorahasta" name="thorahasta" aria-describedby="emailHelp" placeholder="Valor ejemplo: 20.5" required>';
+                                                    echo $tobserva.":";
+                                                    echo '<input type="text" class="form-control" id="tobserva" name="tobserva" aria-describedby="emailHelp" placeholder="Observaciones" required>';
+
+                                            ?>
+                                            </div>
+                                        </div>
+                                    </td><td>
+                                            <div class="list-arrowsh col-md-1">
+                                                <button class="btn btn-default btn-sm move-lefth">
+                                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                                </button>
+                                                <button class="btn btn-default btn-sm move-righth">
+                                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                                </button>
+                                            </div>
+                                    </td><td>
+                                        <div class="dual-list list-righth">
+                                            <div class="well">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <input type="text" name="SearchDualList1" class="form-control" placeholder="search" />
+                                                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-group" id="valoresh">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                </td></tr></table>
+                    <!--fin hoarios atencion -->
+                        </div>
+
+                    <div role="tabpanel" class="tab-pane" id="historias">
+                    <!-- armar historias clinicas -->
+                                <table class="table"><tr><td>
+                                <?php 
+                                    //$link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
+                                    $link = "cargar_especialidades($(this),$('#cmbespecl'),5)";
+                                    echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="cmbinst" name="cmbinst" 
+                                    onchange="'.$link.'" required><option value="0">Seleccione</option>';
+                                    foreach ($institu as $valus){
+                                        echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                    }
+                                    echo '  </select></div></td><td>'.$tcmbespe; 
+                                ?>
+                                    <select onchange="recuperar_campos($(this))" class="form-control custom-select my-1 mr-sm-2" id="cmbespecl" name="cmbespecl"></select><br></td></tr>
+                                    <tr><td colspan="2"><div class="alert-danger"><?php echo $talertas1 ?></td></tr></table>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div id="modules">
+                                                <p class="drag"><a class="btn btn-link">Agrupar</a></p>
+                                                <p class="drag"><a class="btn btn-default">Text</a></p>
+                                                <p class="drag"><a class="btn btn-default">Textarea</a></p>
+                                                <p class="drag"><a class="btn btn-default">Number</a></p>
+                                                <p class="drag"><a class="btn btn-default">Date</a></p>
+                                                <p class="drag"><a class="btn btn-default">Catalogo</a></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-10">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active"><a class="tabh" href="#dropzone0" data-toggle="tab">   <input autocomplete="off" class="form-control" type="text" name="titulo0" id="titulo0" placeholder="Titulo del separador" /> </a></li>
+                                                <li><a class="tabh" href="#dropzone1" data-toggle="tab">  <input autocomplete="off" class="form-control" type="text" name="titulo1" id="titulo1" placeholder="Titulo del separador" /> </a></li>
+                                                <li><a class="tabh" href="#dropzone2" data-toggle="tab">  <input autocomplete="off" class="form-control" type="text" name="titulo2" id="titulo2" placeholder="Titulo del separador" /> </a></li>
+                                                <li><a class="tabh" href="#dropzone3" data-toggle="tab">  <input autocomplete="off" class="form-control" type="text" name="titulo3" id="titulo3" placeholder="Titulo del separador" /> </a></li>
+                                                <li><a class="tabh" href="#dropzone4" data-toggle="tab">  <input autocomplete="off" class="form-control" type="text" name="titulo4" id="titulo4" placeholder="Titulo del separador" /> </a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div  class="tab-pane fade in active" id="dropzone0"></div>
+                                                <div  class="tab-pane fade" id="dropzone1"></div>
+                                                <div  class="tab-pane fade" id="dropzone2"></div>
+                                                <div  class="tab-pane fade" id="dropzone3"></div>
+                                                <div  class="tab-pane fade" id="dropzone4"></div>
+
+                                                <div class="alert-danger"><?php echo $talertas ?></div>
+                                            </div><br>
+
+                                            <table class="table"><tr><td>
+                                                <button onclick="guardar_campos()" class="btn btn-primary pull-center">Guardar</button>
+                                            </td><td>
+                                                <div id="actions" class="row botonsubir">
+                                                    <span class="btn btn-success fileinput-button">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    <span><?php echo $tformat; ?></span>
+                                                    </span>
+                                                </div>
+                                                <div class="fallback">
+                                                    <input name="fileexa" id="fileexa" type="file"  accept=".isco"/>
+                                                </div>
+                                            </td></tr></table>
+                                           
+                                        </div>
+                                    </div>
+                    <!-- fin armar historias clinicas -->
+                            </div>
+                </div>
+            </div>
+
+</div>
+
+</div>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+       
+
+<script src="<?php echo $rbase ?>/configurar.js"></script>
+
+<?php
+     }
+}
+?>

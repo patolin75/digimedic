@@ -1,0 +1,63 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+class atenpormes_view{
+    public function __construct(){
+
+    }
+
+    function visualizaRepmes($lenguaje,$boton,$clases,$reporte){
+        if (file_exists($lenguaje)) include ($lenguaje);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+    ?>
+
+<link rel="stylesheet" href="js/charts/styles.css" />
+
+<div class="container">
+    <div class="desarrollo justify-content-center">
+          <div class="titlepag"><blockquote><i class="fa fa-file fa-lg"></i> <?php echo $trepxmes ?></blockquote></div>
+            <table class="table">
+                <tr><td >
+            <div class="row sparkboxes mt-4">
+              <div class="col-md-7">
+                <div class="box box1">
+                  <div class="details">
+                    <h3>mes</h3>
+                    <h4>atenciones</h4>
+                  </div>
+                  <div id="spark1"></div>
+                </div>
+              </div>
+            </div>
+    </td></tr><tr><td>
+            <br>
+            <div class="row sparkboxes mt-4">
+                <div class="col-md-10">
+                    <div class="box shadow mt-4">
+                    <div id="line-adwords" class=""></div>
+                    </div>
+                </div>
+             </div>
+    </td></tr></table>
+            <br>
+            <table  class="table">
+                <tr><td>RESUMEN</td></tr>
+            </table>
+
+    </div>
+</div>
+
+<script src="js/charts/apexcharts.js"></script>
+<script src="<?php echo $rbase ?>/atenpormes.js"></script>
+<?php
+    }
+}
+?>

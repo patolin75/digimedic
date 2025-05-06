@@ -1,0 +1,102 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+
+class perfil_view{
+    public function __construct(){
+
+    }
+
+    function visualizaPe($filita,$datos,$institu,$roles,$accion,$clases,$open,$id,$sub,$boton){
+        if (file_exists($filita)) include ($filita);
+        require_once($clases."botones.php");
+        $gboto = new botones();
+?>
+        <br>
+        <div class="container">
+                <div class="desarrollo justify-content-center">
+                <?php
+                    if ($accion >0){
+                        echo $gboto->tiempos();
+                    }
+                ?>
+                    <div class="titlepag"><blockquote><i class="fa fa-user fa-lg"></i> <?php echo $tituper ?></blockquote></div>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                                <div class="table-responsive">
+                                <br>
+                                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th><?php echo $tcodrol ?></th>
+                                        <th><?php echo $trol ?></th>
+                                        <th><?php echo $ttotalm ?></th>
+                                        <th><?php echo $tgacciones ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    if ($datos){
+                                        foreach ($datos as $campos){
+                                                $llamado= "cargar('".$campos['id_roles']."','".$campos['nombre_roles']."')";
+                                                echo '<tr><td>'.$campos['id_roles'].'</td><td>'.$campos['nombre_roles'].'</td><td>'.$campos['total_menus'].'</td><td>'.$gboto->get_botoasignar($boton[0],$llamado).'</td></tr>';
+                                        }
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                                </div>
+                    </div>
+                    </div><div class="separar"></div>
+                </div>
+            </div>
+        </div>
+
+<!-- Modal -->
+    <div class="modal fade in" id="ModalEmpresa" tabindex="-1" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            <form action="?open=<?php echo encrypt($open,leer()) ?>&kode=<?php echo encrypt('id='.$id.'&sub='.$sub,leer()) ?>" method="post" enctype="multipart/form-data">  
+                <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $tituper ?></h5>
+            </div>
+                <div class="modal-body table-responsive">
+                        <?php 
+                                $ruta="'$rbase'";
+                                echo '<label for="lblnombre">'.$tcodrol.':</label>
+                                    <input type="text" class="form-control" id="txtcodigo" name="txtcodigo" aria-describedby="codigoHelp" placeholder="Identificacion usuario" readonly>
+                                    <label for="lblnombre">'.$trol.':</label>
+                                    <input type="text" class="form-control" id="txtnombres" name="txtnombres" aria-describedby="codigoHelp" placeholder="Nombres usuario" required><br>
+                                    
+                                    
+                                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">'.$tmenup.':</label>
+                                    <select onchange="cargar_permisos('.$ruta.',this.value)" class="form-control custom-select my-1 mr-sm-2" id="cmbmenup" name="cmbmenup">
+                                        <option value="0">Seleccione un elemento</option>
+                                    </select><br>
+                                    <table class="table table-striped" id="roles">
+                                    </table>';
+                        ?>
+                </div>
+            <div class="modal-footer">
+                <button type="button" onclick="window.location.href='?open=<?php echo encrypt ($open,leer()) ?>&kode=<?php echo encrypt ('id='.$id.'&sub='.$sub,leer()) ?>'" class="btn btn-secondary"><?php echo $bcerrar ?></button>
+        </div>
+        </form>
+        </div>    
+    </div>
+    </div>
+
+    <?php echo $gboto->get_ventana($accion) ?>
+    <script src="<?php echo $rbase ?>/perfiles.js"></script>
+<?php
+    }
+}
+?>

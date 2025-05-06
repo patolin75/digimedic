@@ -1,0 +1,185 @@
+<?php
+/*
+ * @see       https://www.iscosystem.com.ec
+ *
+ * @author    Pato Jimenez <pojimenez1@hotmail.com>
+ * @test      Adriana Becerra <abbecerra@gmail.com>
+ * @copyright Iscosystem Co. ltda.
+ * @license   Su uso se restringue a lo descrito en la licencia en la compra del producto
+ * @note      clase que permite cargar el menu inicial del sitio
+ */
+
+class usuario_view{
+    public function __construct(){
+
+    }
+
+    function visualizaUS($filita,$datos,$institu,$roles,$accion,$clases,$open,$id,$sub,$boton,$filtrado){
+            if (file_exists($filita)) include ($filita);
+            require_once($clases."botones.php");
+            $gboto = new botones();
+    ?>
+  
+    
+            <br>
+            <div class="container">
+                    <div class="desarrollo justify-content-center">
+                    <?php
+                        if ($accion >0){
+                            echo $gboto->tiempos();
+                        }
+                    ?>
+                        <div class="titlepag"><blockquote><i class="fa fa-user fa-lg"></i> <?php echo $tvusuarios ?></blockquote></div>
+
+                        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                                    <div class="table-responsive">
+                                    <table class="table"><tr><td>
+                                    <?php 
+
+                                    $link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
+
+                                    echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtro" name="filtro" 
+                                    onchange="'.$link.'" required><option value="0">Todos</option>';
+                                    foreach ($institu as $valus){
+                                        echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                    }
+                                    echo '  </select></td><td>'.$tgacciones;
+                                    echo $gboto->get_botonnuevo($boton[0],"limpiar(0)"); ?>
+                                    </td></tr></table>
+                                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                            <th><?php echo $tgcodempre ?></th>
+                                            <th><?php echo $tgempresa ?></th>
+                                            <th><?php echo $tmail ?></th>
+                                            <th><?php echo $tgtelefono ?></th>
+                                            <th><?php echo $tgestado ?></th>
+                                            <th><?php echo $tgacciones ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        if ($datos){
+                                            foreach ($datos as $campos){
+                                                    $llamado= "cargar('".$rbase."','".$campos['identificacion_usuarios']."')";
+                                                    $llamado1="Borrar('".$rbase."','".$campos['identificacion_usuarios']."','".$open."','".$id."','".$sub."','".$campos['tipo_usuarios']."')";
+                                                    $llamado2="cerrar_sesion('".$rbase."','".$campos['identificacion_usuarios']."','".$open."','".$id."','".$sub."')";
+
+                                                    if ($campos['activo_usuarios']==0) $uestado= "Inactivo"; else $uestado= "Activo"; 
+                                                    echo '<tr><td>'.$campos['id_usuarios'].'</td><td>'.$campos['nombres_usuarios']. ' '.$campos['apellidos_usuarios'].'</td><td>'.$campos['email_usuarios'].'</td><td>'.$campos['telefono_usuarios'].'</td><td>'.htmlentities($uestado, ENT_QUOTES,  'utf-8').'</td><td>'.$gboto->get_boton(2,"Cerrar sesión",$llamado2,1).' '.$gboto->get_botonesgrid($boton[1],$boton[2],$llamado,$llamado1).'</td></tr>';
+                                            }
+                                            echo "<script>$('#filtro').val(".$filtrado.");</script>";
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                        </div>
+                        </div><div class="separar"></div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Modal -->
+        <div class="modal fade in" id="ModalEmpresa" tabindex="-1" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                <form action="?open=<?php echo encrypt($open,leer()) ?>&kode=<?php echo encrypt('id='.$id.'&sub='.$sub,leer()) ?>" method="post" enctype="multipart/form-data">  
+                    <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $tvusuarios ?></h5>
+                </div>
+                    <div class="modal-body table-responsive">
+                            <?php 
+                                    $link1='"cargar_especialidad($(this).val(),0)"';
+                                    echo ' <div class="custom-file">
+                                                <div class="picture-container">
+                                                    <div class="picture">
+                                                        <img src="'.$foto.'" class="picture-src" id="wizardPicturePreview" title=""/>
+                                                    
+                                                        <input type="file" id="wizard-picture" accept=".jpg, .png, .jpeg, .svg">
+                                                    </div>
+                                                    <h6>Cambiar foto</h6>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" class="form-control" id="txtimage" name="txtimage">
+
+                                        <table class="table"><tr><td>
+                                        <label for="lblnombre">'.$tinstitucion.':</label>
+                                        <select class="form-control custom-select my-1 mr-sm-2" id="cmbinstitu" name="cmbinstitu" onchange='.$link1.' required>';
+                                        foreach ($institu as $valus){
+                                            echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                        }
+                                        echo '  </select></td>
+                                            <td><input id="txtiduser" name="txtiduser" type="hidden" type="text" />
+                                            <label for="lblnombre">'.$tidentifica.':</label>
+                                            <input type="text" class="form-control" id="txtcodigo" name="txtcodigo" aria-describedby="codigoHelp" placeholder="Identificacion usuario" required>
+                                            </td></tr>
+                                            <tr><td>
+                                            <label for="lblnombre">'.$tnombres.':</label>
+                                            <input type="text" class="form-control" id="txtnombres" name="txtnombres" aria-describedby="codigoHelp" placeholder="Nombres usuario" required><br>
+                                            </td><td> <label for="lblnombre">'.$tapellidos.':</label> <input type="text" class="form-control" id="txtapellidos" name="txtapellidos" aria-describedby="codigoHelp" placeholder="Apellidos usuario" required>
+                                            </td></tr>
+                                                <input type="hidden" class="form-control" id="txtdireccion" name="txtdireccion" rows="3" placeholder="Dirección usuario" required>
+                                            <tr><td>
+                                            <label for="exampleInputEmail1">'.$tmail.':</label>
+                                            <input type="email" class="form-control" id="txtmail" name="txtmail" aria-describedby="emailHelp" placeholder="Ingrese email" required>
+                                            </td><td>
+                                            <label for="lblnombre">'.$tgtelefono.':</label>
+                                            <input type="text" class="form-control" id="txttelefono" name="txttelefono" aria-describedby="codigoHelp" placeholder="Número de teléfono" required>
+                                            </td></tr><tr><td>
+                                            <label for="exampleInputEmail1">'.$tsexo.':(F/M)</label>
+                                            <input type="text" class="form-control" id="txtsexo" name="txtsexo" aria-describedby="emailHelp" placeholder="Sexo o género" required>
+                                            </td><td>
+                                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">'.$ttipo.':</label>
+                                            <select onchange="valida_us()" class="form-control custom-select my-1 mr-sm-2" id="cmbtipo" name="cmbtipo">
+                                                <option value="1">Externo</option>
+                                                <option value="2">Interno</option>
+                                            </select>
+                                            </td></tr><tr><td>
+                                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">'.$tgestado.':</label>
+                                            <select class="form-control custom-select my-1 mr-sm-2" id="cmbestado" name="cmbestado">
+                                                <option value="0">Inactivo</option>
+                                                <option value="1">Activo</option>
+                                            </select>
+                                            </td><td>
+                                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">'.$troles.':</label>
+                                            <select class="form-control custom-select my-1 mr-sm-2" id="cmbroles" name="cmbroles">';
+                                                foreach ($roles as $values){
+                                                    echo '<option value="'.$values['id_roles'].'">'.$values['nombre_roles'].'</option>';
+                                                }
+                                        echo '</select></td></tr>
+                                        <tr><td colspan="2">
+                                        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">'.$tespecia.':</label>
+                                             <select class="form-control custom-select my-1 mr-sm-2" id="cmbespe" name="cmbespe">
+                                            </select>
+                                        </td></tr></table>
+                                        <div id="usein">
+                                            <hr>
+                                            <h4>Usuarios internos</h4>
+                                            <hr>
+                                            <label for="lblnombre">'.$user.':</label>
+                                            <input type="text" class="form-control" id="txtuser" name="txtuser" aria-describedby="codigoHelp" placeholder="Usuario es generado por el sistema" readonly>
+                                            <label for="lblnombre">'.$tpass.':</label>
+                                            <input type="password" autocomplete="off" class="form-control" id="txtpassw" name="txtpassw" aria-describedby="codigoHelp" placeholder="Contraseña">
+                                            <label for="lblnombre">'.$treingreso.':</label>
+                                            <input type="password" autocomplete="off" class="form-control" id="txtpaswr" name="txtpaswr" aria-describedby="codigoHelp" placeholder="Ingrese nuevamente">
+                                            <div id="form_errorsu"  style="display:none"></div>
+                                        </div>';
+                            ?>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button><?php echo $gboto->get_guardar(1,"") ?>
+            </div>
+            </form>
+            </div>    
+        </div>
+        </div>
+        <?php echo $gboto->get_ventana($accion) ?>
+        <script src="<?php echo $rbase ?>/usuario.js"></script>
+<?php
+    }
+}
+?>

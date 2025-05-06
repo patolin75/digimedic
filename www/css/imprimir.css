@@ -1,0 +1,17 @@
+.receta{
+    width:330px;
+    line-height : 15px;
+    font-size : 1.2cap;
+}
+.receta hr{
+    background-color:red;
+}
+.datos_cliente{
+    width: 330px;
+}
+.receta .encabezado{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+

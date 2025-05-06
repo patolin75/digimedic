@@ -24,12 +24,12 @@ class botones{
         return $boton1;
     }
 
-    function get_boton($permiso,$titulo,$link,$tamano){
+    function get_boton($permiso,$titulo,$link,$tamano,$nombre=""){
         if ($permiso==1){
             if ($tamano==1)
-                $boton1= '<button class="btn btn-info btn-block" onclick="'.$link.'"><i class="fa fa-home"></i> '.$titulo.'</button>';
+                $boton1= '<button class="btn btn-info btn-block '.$nombre.'" onclick="'.$link.'"><i class="fa fa-home"></i> '.$titulo.'</button>';
             else
-                $boton1= '<button class="btn btn-info" onclick="'.$link.'"><i class="fa fa-home"></i> '.$titulo.'</button>';
+                $boton1= '<button class="btn btn-info '.$nombre.'" onclick="'.$link.'"><i class="fa fa-home"></i> '.$titulo.'</button>';
         }
        
         return $boton1;

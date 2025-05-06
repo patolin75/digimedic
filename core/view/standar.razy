@@ -1,0 +1,40 @@
+<div class="receta" hidden>
+    <div class="encabezado"> 
+        <?php
+          foreach ($datosins as $value){
+                if ($value['logo'])  echo '<logo><img src="'.$value['logo'].'" width="100" height="100"></logo><br>'; 
+                if ($value['name_institucion']) echo '<eempresa>'.$value['name_institucion'].'</eempresa><br>';
+                if ($value['detalle_institucion']) echo '<detalle>'.$value['detalle_institucion'].'</detalle><br>';
+                if ($value['telefono_institucion']) echo '<telefono>'.$value['telefono_institucion'].'</telefono><br>';
+                if ($value['direccion_institucion']) echo '<direccion>'.$value['direccion_institucion'].'</direccion><br>';
+                echo "<br>";
+          }
+        ?>
+        <num_autoriza_sri></num_autoriza_sri>
+    </div>
+    <div class="datos_cliente">
+        <fecha></fecha><br>
+        <nombre></nombre><br>
+        <diagnostico></diagnostico><br>
+        <cie10></cie10><alergias></alergias><br>
+        <peso></peso><talla></talla><imc></imc><br>
+    </div>
+    <div class="detalle">
+        <h5>Rp.</h5>
+        <hr>
+        <medicamentos></medicamentos>
+        <h5>PRESCRIPCIÓN</h5>
+        <hr>
+        <prescripcion></prescripcion>
+    </div>
+    <recibe></recibe><br>
+    <nomcajas>
+        <div class="encabezado">    
+            <?php
+                foreach($formato as $value){
+                    echo '<br>____________________________________<br><b>'.$value['nombres_usuarios'].' '.$value['apellidos_usuarios'].'</b>';
+                }
+            ?>
+        </div>
+    </nomcajas>
+</div>

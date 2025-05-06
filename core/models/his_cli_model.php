@@ -6,14 +6,28 @@ class hiscli_model{
         $this->db=Conectar::conexion();
     }
 
+    function get_institucion($code){
+        $sql="select * from tb_institucion where id_institucion=$code and estado=1";
+
+
+        $consulta= Conectar::select($this->db,$sql);    
+        return $consulta;
+    }
+
+    function get_formatorec($code){
+        $sql="select email_usuarios,telefono_usuarios,nombres_usuarios,apellidos_usuarios,formareceta_usuarios from tb_usuarios where id_usuarios=$code and activo_usuarios=1";
+        $consulta= Conectar::select($this->db,$sql);        
+        return $consulta;
+    }
+
     function get_paciente($id){
             $sql= "select id_cliente as id,clientes_identificacion as identifica, clientes_foto as foto,clientes_apellidos as apellidos,clientes_nombres as nombres,clientes_telefono,
             clientes_email,clientes_tiposangre,clientes_estadocivil,clientes_sexo,DATE_FORMAT(clientes_fechanac,'%Y-%m-%d'),concat (TIMESTAMPDIFF(YEAR,clientes_fechanac,CURDATE()),' años') AS edad,concat (TIMESTAMPDIFF(YEAR,clientes_fechanac,CURDATE()),' años') AS edad,
             clientes_nacionalida,clientes_provincia,clientes_canton, clientes_parroquia, clientes_fecharegistro from tb_clientes where id_cliente='".$id."'";
             $consulta= Conectar::select($this->db,$sql);
-            
             return $consulta;
     }
+
 
     function get_pacientes($idinstitu){
         $consulta= "select * FROM tb_clientes where id_empresa='".$idinstitu."'";

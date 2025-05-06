@@ -45,6 +45,7 @@ $tinstitucion= "Institución";
 $troles="Roles";
 $tespecia="Especialidad";
 $tvertodo="Puede visualizar datos de la empresa";
+$formatore= "Formato recetario";
 
 //ROLES
 $titurol = "ROLES";

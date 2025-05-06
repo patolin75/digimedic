@@ -72,6 +72,49 @@ $(function () {
 });
 
 
+$(function () {
+    $('.imprimerec').click(function () {
+        //patolin
+        let textarea    = document.getElementById('txtmsg55'),
+            textarea1   = document.getElementById('txtmsg56'),
+            nombre      = "";
+            
+        var listItems = $("#especialista li");
+        for (let li of listItems) {
+            let product = $(li);
+            if(product[0].firstElementChild.checked)
+                nombre=product[0].innerText;
+        }
+        $(".receta").find("fecha").html('Fecha : '+fecha_actual());
+        $(".receta").find("nombre").html('Nombre : '+nombre);
+        $(".receta").find("diagnostico").html('Diagnóstico : ');
+        
+        $('.receta').removeAttr('hidden');
+        $(".receta").find("medicamentos").html(sceditor.instance(textarea).val());
+        $(".receta").find("prescripcion").html(sceditor.instance(textarea1).val());
+            jQuery('.receta').print();
+        $('.receta').attr('hidden',true);  
+    });    
+});
+
+
+
+
+function fecha_actual(){
+    var fecha   = new Date(),
+        hora    = 0,
+        minutos = 0,
+        segundo = 0,
+        mes = fecha.getMonth()+1,
+        dia = fecha.getDate(),
+        ano = fecha.getFullYear();
+    if(dia<10) dia='0'+dia; 
+    if(mes<10) mes='0'+mes;
+    hora=(fecha.getHours() < 10) ? ("0" + fecha.getHours()) : fecha.getHours();
+    minutos=(fecha.getMinutes() < 10) ? ("0" + fecha.getMinutes()) : fecha.getMinutes();
+    segundo=(fecha.getSeconds() < 10) ? ("0" + fecha.getSeconds()) : fecha.getSeconds();
+    return ano+"-"+mes+"-"+dia+"T"+hora+ ":" + minutos;
+}
 
 function recupera_historia(cliente,user){
     var institu = $('#idins').val();

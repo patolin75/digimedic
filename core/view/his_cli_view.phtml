@@ -13,13 +13,14 @@ class hiscli_view{
 
     }
 
-    function visualizaHi($lenguaje,$botones,$clases,$pacientes,$directo,$institu,$especialidad){
+    function visualizaHi($lenguaje,$botones,$clases,$pacientes,$directo,$institu,$especialidad,$datosins,$formato){
         if (file_exists($lenguaje)) include ($lenguaje);
         require_once($clases."botones.php");
         $gboto = new botones();
         echo $gboto->get_mensajes();
     ?>
         <link rel="stylesheet" href="js/charts/styles.css" />
+        <link href="css/imprimir.css" rel="stylesheet">
         <link rel="stylesheet" href="js/editor/themes/default.min.css" id="theme-style" />
         <script src="js/editor/sceditor.min.js"></script>
         <script src="js/jQuery.print.js"></script> 
@@ -149,7 +150,7 @@ class hiscli_view{
                                                 <br><label>'.$tmedicam.' </label>: click en <img src="images/vademecum.png" style="height: 30px; width: 30px;" title=""/> para acceder a Vademecum
                                                 <textarea class="form-control" id="txtmsg55" name="txtmsg55"></textarea><br><label>'.$tprecrib.' </label>:
                                                 <textarea class="form-control" id="txtmsg56" name="txtmsg56"></textarea><br></div>';
-                                                echo $gboto->get_boton(1,"Imprimir","jQuery('#impresion').print()",2);
+                                                echo $gboto->get_boton(1,"Imprimir","",2,"imprimerec");
                                                 ?>
                                             </div>
 
@@ -237,6 +238,12 @@ class hiscli_view{
                         recuperar_campos(<?php echo $institu ?>,<?php echo $especialidad ?>);
                 </script>
     <?php
+            foreach($formato as $valores){
+                if ($valores['formareceta_usuarios'])
+                    include($valores['formareceta_usuarios']);
+            }
+            
+            
          if ($directo) 
             echo "<script>recupera_historia(".$directo.",".$_SESSION['codus']."); cargar_examenes(".$directo.");</script>";
     }

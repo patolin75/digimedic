@@ -23,8 +23,10 @@ else
     $pacientes=$per->get_pacientes($_SESSION['institucion']);
    
 $especialidad=$per->get_especialidad($_SESSION['codus']);
+$formato = $per->get_formatorec($_SESSION['codus']);
+$datosins = $per->get_institucion($_SESSION['institucion']);
 
 cargar_vista($vista,$open);
 $verhome=new hiscli_view();
-$verhome->visualizaHi($configura.'lenguaje.php',$boton,$clases,$pacientes,$directo,$_SESSION['institucion'],$especialidad);
+$verhome->visualizaHi($configura.'lenguaje.php',$boton,$clases,$pacientes,$directo,$_SESSION['institucion'],$especialidad,$datosins,$formato);
 ?>

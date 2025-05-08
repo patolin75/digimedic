@@ -7,7 +7,7 @@
         elemento1       = "#colum0",
         elemento2       = "#colum1",
         elemento3       = "#colum2";
-        
+
     $document.on('click','.list-group .list-group-item', function (e){
         $(this).toggleClass('active');
     });
@@ -56,8 +56,6 @@
         recuperar_camposex($(this));
     });
    
-    
-
     $('.list-arrows button').click(function () {
         var $button = $(this), 
             actives = '',
@@ -488,7 +486,7 @@
 
 
     //PARA ARMAR LA HISTORIA CLINICA//
-    $('.tabh').click(function(){
+    $document.on('click','.tabh', function (e){
         var href = $(this).attr('href');
         dragable(href);
     })
@@ -547,11 +545,11 @@
         });
     }
 
-    $(document).ready(function() {
-        $('.fileinput-button').on('click', function() {
+
+    $document.on('click','.fileinput-button', function (e){
             $("#fileexa").click();
-        });
     });
+
 
     $("#fileexa").change(function(){
         readURL(this);

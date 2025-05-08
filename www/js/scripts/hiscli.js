@@ -1,5 +1,15 @@
 //var theme = 'js/editor/themes/office.min.css';
 window.onload = function () {
+    var textpedidos = document.getElementById('txtexma2');
+    sceditor.create(textpedidos, {
+        format: 'bbcode',
+        icons: 'monocons',
+        style: 'js/editor/themes/content/default.min.css',
+        locale: 'es',
+        width: "100%",
+        height: "100%",
+        toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule,image,email,link,unlink|date,time|maximize"});
+
     var textarea1 = document.getElementById('txtmsg55');
     sceditor.create(textarea1, {
         format: 'bbcode',
@@ -8,8 +18,7 @@ window.onload = function () {
         locale: 'es',
         width: "100%",
         height: "100%",
-        toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule,image,email,link,unlink|date,time|maximize"
-    });
+        toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule,image,email,link,unlink|date,time|maximize"});
     var textarea2 = document.getElementById('txtmsg56');
     sceditor.create(textarea2, {
         format: 'bbcode',
@@ -18,9 +27,22 @@ window.onload = function () {
         locale: 'es',
         width: "100%",
         height: "100%",
-        toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule,image,email,link,unlink|date,time"
-    }); 
+        toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule,image,email,link,unlink|date,time"}); 
+
+    var txtobserva = document.getElementById('txtobserva');
+        sceditor.create(txtobserva, {
+            format: 'bbcode',
+            icons: 'monocons',
+            style: 'js/editor/themes/content/default.min.css',
+            locale: 'es',
+            width: "100%",
+            height: "100%",
+            toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule|date,time|print"});
 }
+
+
+
+                       
 
 $(function () {
     $('#especialista').click(function () {
@@ -152,7 +174,7 @@ function genera_qr(cliente,institu){
         url: 'api/api_hiscli.php',
         data: parametros,
         success: function(response) {
-            $('#imgqr').attr('src',response);
+            $('#imgqr').attr('src','data:image/png;base64,'+response);
         }
     });
 }
@@ -234,6 +256,12 @@ function llenado(zona,obj1){
             textarea = document.getElementById(object);
             sceditor.instance(textarea).val(obj1['dropzone'+zona][0][i]);
             i++;
+        }else if (this.type=='checkbox'){
+            if (obj1['dropzone'+zona][0][i]==1)
+                this.checked = true;
+            else
+                this.checked = false;
+            i++
         }else
             if (object.length >0){
                 $(this).val(obj1['dropzone'+zona][0][i]);
@@ -351,6 +379,7 @@ function limpiar2(){
     for (var elemen=0; elemen <=5; elemen++){
         $("#zone"+elemen).find('textarea,input,select').each(function() {
             var object = this.id;
+            $(this).prop('checked', false);
             if (object.indexOf('txtmsg') > -1 ){
                 textarea = document.getElementById(object);
                 sceditor.instance(textarea).val("");
@@ -407,8 +436,7 @@ function guardar_his(){
     if ($('#idpac').val() == null || $('#idpac').val() ==0){
         $('#msg').html('<div class="alert alert-danger" role="alert"><h4 class="alert-heading">Acción!!</h4><p>Proceso no ejecutado, seleccione un paciente por favor.</p></div>');
         premsg();
-    }
-    else{
+    }else{
             var user=$('#txtus').val();
             var idpac = $('#idpac').val();
             var idins = $('#idins').val(); 
@@ -433,7 +461,10 @@ function guardar_his(){
                             i++;
                         }else
                             if (object.length >0){
-                                jsonfin+='"'+i+'":"'+$(this).val()+'",';
+                                if ($(this).is(":checked"))
+                                    jsonfin+='"'+i+'":"1",';
+                                else
+                                    jsonfin+='"'+i+'":"'+$(this).val()+'",';
                                 i++;
                             } 
                     });
@@ -624,17 +655,21 @@ function get_objeto(tipo,etiqueta,i,agrup){
         }
         select = select + '</select>';
         objeto = objeto + select;
-    }
-    else if (tipo =='Agrupar'){
+    }else if (tipo =='Agrupar'){
         if (agrup>1) objeto = '</div></div>';
         objeto = objeto+ '<div class="panel panel-primary"><div class="panel-heading"> <span class="pull-left clickable"><h3 class="panel-title"> '+etiqueta+' </h3></span>'+
                         '<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span><br></div><div class="panel-body collapse">';
-    }
-    else
+    }else if (tipo =='Check'){
+         objeto = objeto +' <input type="checkbox" value="1" id="'+etiqueta+'" name="'+etiqueta+'" class="form-check-input checkbox-xl"> ';
+    }else
         objeto = objeto +'<input class="form-control" type="'+tipo+'" id="'+etiqueta+'" name="'+etiqueta+'">';
 
     return objeto;
 }
+
+$(document).on('change','input[type="checkbox"]' ,function(e) {
+    //console.log($(this).val());
+});
 
 function crear_textarea(i){
     var textarea = document.getElementById('txtmsg'+i);
@@ -662,6 +697,10 @@ $(document).on('click', '.panel-heading span.clickable', function(e){
 	}
 })
 
+
+function solicitar_exa(){
+        mostra_ventana('Modalpedidos');
+}
 
 function vademecum(){
     var parametros = {'what': 'vade'};

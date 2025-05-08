@@ -151,11 +151,15 @@ class usuario_view{
                                                     echo '<option value="'.$values['id_roles'].'">'.$values['nombre_roles'].'</option>';
                                                 }
                                         echo '</select></td></tr>
-                                        <tr><td colspan="2">
+                                        <tr><td>
                                         <label class="my-1 mr-2" for="inlineFormCustomSelectPref">'.$tespecia.':</label>
                                              <select class="form-control custom-select my-1 mr-sm-2" id="cmbespe" name="cmbespe">
                                             </select>
-                                        </td></tr></table>
+                                        </td><td>
+                                            <label for="exampleInputEmail1">'.$formatore.':</label>
+                                            <input type="text" class="form-control" id="txtforato" name="txtforato" value="standar.razy" aria-describedby="emailHelp" placeholder="Formato de recetario" required>
+                                            </td>
+                                        </tr></table>
                                         <div id="usein">
                                             <hr>
                                             <h4>Usuarios internos</h4>

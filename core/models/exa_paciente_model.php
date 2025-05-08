@@ -70,7 +70,7 @@ class exa_model{
                         clientes_email, clientes_tiposangre, clientes_fechanac, clientes_foto, clientes_estadocivil, clientes_sexo, 
                         clientes_nacionalida, clientes_provincia, clientes_canton, clientes_parroquia, clientes_fecharegistro) values (".$id[0][0].",".$insert[0].",'".$insert[2]."','".$insert[6]."','".$insert[5]."','".
                         $insert[7]."','".$insert[8]."','".$insert[9]."','".date('Y-m-d',strtotime($insert[12]))."','".$insert[4]."','".$insert[10]."','".$insert[11]."','".$insert[14]."','".$insert[15]."','".
-                        $datos[16]."','".$datos[17]."','".date('Y-m-d')."')";
+                        $insert[16]."','".$insert[17]."','".date('Y-m-d')."')";
             }else
                 $error='f';
         }else{ //UPD

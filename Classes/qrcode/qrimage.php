@@ -30,7 +30,7 @@
         public static function png($frame, $filename = false, $pixelPerPoint = 4, $outerFrame = 4,$saveandprint=FALSE) 
         {
             $image = self::image($frame, $pixelPerPoint, $outerFrame);
-            
+            $r='';
             if ($filename === false) {
                 Header("Content-type: image/png");
                 ImagePng($image);
@@ -40,11 +40,19 @@
                     header("Content-type: image/png");
                     ImagePng($image);
                 }else{
-                    ImagePng($image, $filename);
+                    if($filename=='*') {
+                       ob_start();
+                       ImagePng($image);
+                       $r = base64_encode(ob_get_contents());
+                       ob_end_clean();
+                    } else { 
+                       ImagePng($image, $filename);
+                    } 
                 }
             }
-            
+
             ImageDestroy($image);
+            return $r;
         }
     
         //----------------------------------------------------------------------

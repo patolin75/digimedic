@@ -33,42 +33,32 @@ header('Access-Control-Allow-Methods: POST, GET');
         if ($what == 'pac'){
             $datos=$per->get_paciente($code);
             $result = json_encode($datos);
-        }
-        if ($what == 'hist'){
+        }elseif ($what == 'hist'){
             $datos=$per->get_historia($institu,$code);
             $result = json_encode($datos);
-        }
-        if ($what == 'qr'){
+        }elseif ($what == 'qr'){
             $datos = $per->get_qr($code);
-            $ruta = '../images/carpeta_'.$institu.'/qr/qr.png';
-            $datos = QRcode::png($datos,$ruta);
-            $imgbinary = fread(fopen($ruta, "r"), filesize($ruta));
-            $result = 'data:image/png;base64,'.base64_encode($imgbinary);
-        }
-        if ($what == 'visi'){
+            $imgQR= QRcode::png($datos,'*','Q', '2', 2);
+            $result = $imgQR;
+        }elseif ($what == 'visi'){
             $datos=$per->get_visitas($user,$code);
             $result = json_encode($datos);
-        }
-        if ($what == 'valvisit'){
+        }elseif ($what == 'valvisit'){
             $datos=$per->get_valoresvisitas($code);
             $result = json_encode($datos);
-        }
-        if ($what =='exam'){
+        }elseif ($what =='exam'){
             $datos=$per->get_examenes($code,$user,$institu);
             $result = json_encode($datos);
-        }
-        if ($what =='vade'){
+        }elseif ($what =='vade'){
             $datos=$per->get_vademecum();
             $result = json_encode($datos);
-        }
-        if ($what =='grabar')
+        }elseif ($what =='grabar')
            $result=$per->set_savevisita($code,$institu,$user,$hiscli,$visihis,$valor);
-        if ($what =='grabarexa')
+        elseif ($what =='grabarexa')
             $result=$per->set_updaexam($code,$valor);
-        if ($what =='cerrarse')
+        elseif ($what =='cerrarse')
             $result=$per->set_cerrarse($code);
-            
-        if ($what =='grafica'){
+        elseif ($what =='grafica'){
             $datos=$per->get_valgrafica($code,$hiscli);
             $result = json_encode($datos);
         }

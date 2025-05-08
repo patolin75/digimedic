@@ -1219,6 +1219,43 @@ table .header{
   border-radius: 10px;
 }
 
+.cuadroexa{
+  display: flex;
+  align-items: flex-end;
+}
+
+#colum0 {
+  padding: 20px;
+  background: #eee;
+  width: 40%;
+  min-height: 100px;
+  margin-bottom: 20px;
+  z-index: 0;
+  border-radius: 10px;
+  margin:5px 
+}
+
+#colum1 {
+  padding: 20px;
+  background: #eee;
+  width: 40%;
+  min-height: 100px;
+  margin-bottom: 20px;
+  z-index: 0;
+  border-radius: 10px;
+  margin:5px 
+}
+
+#colum2 {
+  padding: 20px;
+  background: #eee;
+  width: 40%;
+  min-height: 100px;
+  margin-bottom: 20px;
+  z-index: 0;
+  border-radius: 10px;
+  margin:5px 
+}
 
 .hover {
   outline: 1px solid blue;

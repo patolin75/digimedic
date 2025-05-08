@@ -25,12 +25,11 @@ class configurar_model{
     }
 
     function get_mostraroles(){
+        $idrol='';
         $consulta= "select * from tb_roles where activa_roles='1'";
-
         $personas= Conectar::select($this->db,$consulta);
-
         foreach($personas as $valores){
-            $idrol = $valores['id_roles'].",".$idrol;
+            $idrol .= $valores['id_roles'].",";
             
         }
         $idrol = substr($idrol, 0, -1);

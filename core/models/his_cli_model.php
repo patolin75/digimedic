@@ -63,7 +63,7 @@ class hiscli_model{
             $name         = $valores['clientes_nombres'].' '.$valores['clientes_apellidos'];
             $sortName     = $valores['clientes_nombres'];
             $phoneCell    = $valores['clientes_telefono'];
-            $orgName      = 'Sistema Medico';
+            $orgName      = 'RAZY de CoreSolutionstech';
             $email        = $valores['clientes_email'];
 
             if ($valores['clientes_tiposangre']) $tiposangre   = 'Tipo '.$valores['clientes_tiposangre'];

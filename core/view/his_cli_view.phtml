@@ -140,7 +140,7 @@ class hiscli_view{
                                                         </td><tr><td>
                                                             <label><?php echo $texapaciente; ?></label>
                                                             <textarea id="txtobserva"></textarea>   
-                                                            <?php  echo $gboto->get_boton($botones[0],"Pedido examenes","",2);?>     
+                                                            <?php  echo $gboto->get_boton($botones[0],"Pedido examenes","solicitar_exa()",2);?>     
                                                         </td></tr>
                                                     </table>
                                             </div>
@@ -177,6 +177,7 @@ class hiscli_view{
 
             </div>
         </div>
+            <!-- vademecum -->
             <div class="modal fade in" id="ModalVade" role="dialog" aria-labelledby="ModalEmpresaTitle" aria-hidden="true">
                 <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
@@ -219,23 +220,37 @@ class hiscli_view{
                     </div>
                     </div>    
                 </div>
-                </div>
+            </div>
 
+
+            <!--- PEDIDOS DE EXMENES --->
+            <div class="modal fade in" id="Modalpedidos" role="dialog" aria-labelledby="ModalpedidosTitle" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                            <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $texmamenes ?></h5>
+                                </div>
+                            <div class="modal-body table-responsive">
+                                    <textarea class="form-control" id="txtexma1" name="txtexma1"></textarea><br>
+                                    <textarea class="form-control" id="txtexma2" name="txtexma2"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo $bcerrar ?></button><?php echo $gboto->get_boton(1,"Solicitar","",2) ?>
+                            </div>
+                    </div>    
+                </div>
+            </div>
+
+
+            <!-- fin pedidos -->
                 <script src="js/charts/apexcharts.js"></script>
                
                 <script> 
-                        var txtobserva = document.getElementById('txtobserva');
-                        sceditor.create(txtobserva, {
-                            format: 'bbcode',
-                            icons: 'monocons',
-                            style: 'js/editor/themes/content/default.min.css',
-                            locale: 'es',
-                            width: "100%",
-                            height: "100%",
-                            toolbar: "bold,italic,underline,strike,subscript,superscript|font,size,color,removeformat|cut,copy,pastetext|horizontalrule|date,time|print"
-                        });
-                        cita_actua('<?php echo $_SESSION['codus']; ?>');
-                        recuperar_campos(<?php echo $institu ?>,<?php echo $especialidad ?>);
+                         cita_actua('<?php echo $_SESSION['codus']; ?>');
+                         recuperar_campos(<?php echo $institu ?>,<?php echo $especialidad ?>);
                 </script>
     <?php
             foreach($formato as $valores){

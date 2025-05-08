@@ -39,6 +39,7 @@ class configurar_view{
                     <li role="presentation"><a href="<?php echo  $linkt ?>#messages" aria-controls="messages" role="tab" data-toggle="tab"><?php echo $tcostoespe ?></a></li>
                     <li role="presentation"><a href="<?php echo  $linkt ?>#settings" aria-controls="settings" role="tab" data-toggle="tab"><?php echo $thorarioate ?></a></li>
                     <li role="presentation"><a href="<?php echo  $linkt ?>#historias" aria-controls="historias" role="tab" data-toggle="tab"><?php echo $thistoconf ?></a></li>
+                    <li role="presentation"><a href="<?php echo  $linkt ?>#examenes" aria-controls="examenes" role="tab" data-toggle="tab"><?php echo $texmamenes ?></a></li>
                 </ul>
                 <!-- Tab panes -->
                     <div class="tab-content">
@@ -101,8 +102,8 @@ class configurar_view{
                                     </td></tr> </table>
                     <!-- fin agenda citas -->
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="profile">
 
+                        <div role="tabpanel" class="tab-pane" id="profile">
                     <!-- accesos -->
                                 <table class="table">
                                 <tr><td>
@@ -110,7 +111,7 @@ class configurar_view{
                                     <div class="well text-left0">
                                     <?php
                                                // $link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
-                                                $link = "cargar_listaemp($(this),$('#filtrou'),3)";
+                                                //$link = "cargar_listaemp($(this),$('#filtrou'),3)";
                                                 
                                                 echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroa" name="filtroa" 
                                                 onchange="'.$link.'" required><option value="0">Seleccione</option>';
@@ -119,12 +120,8 @@ class configurar_view{
                                                 }
                                                 echo '  </select> '; 
 
-                                                echo  ucwords(strtolower($tvusuarios)).'<select class="form-control custom-select my-1 mr-sm-2" id="filtrou" name="filtrou" onchange="cargar_accesos($(this).val())" required>
-                                                <option value="0">Seleccione</option>';
-                                               /* foreach ($lisusuario as $valus){
-                                                    echo '<option value="'.$valus['identificacion_usuarios'].'">'.$valus['nombres_usuarios'].' '.$valus['apellidos_usuarios'].'</option>';
-                                                }*/
-                                                echo '  </select> '; 
+                                                echo  ucwords(strtolower($tvusuarios)).'<select class="form-control custom-select my-1 mr-sm-2" id="filtrou" name="filtrou" onchange="" required>
+                                                <option value="0">Seleccione</option></select> '; 
 
                                                 //echo "<script>$('#filtroa').val(".$filtrado.");</script>";  
                                             ?>
@@ -173,7 +170,7 @@ class configurar_view{
                                     <div class="well text-left">
                                     <?php 
                                             //$link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
-                                            $link = "cargar_listaemp($(this),$('#filtroe'),4)";
+                                           // $link = "cargar_listaemp($(this),$('#filtroe'),4)";
                                             echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtro" name="filtro" 
                                             onchange="'.$link.'" required><option value="0">Seleccione</option>';
                                             foreach ($institu as $valus){
@@ -181,7 +178,7 @@ class configurar_view{
                                             }
                                             echo '  </select> '; 
 
-                                            echo $tespecialita.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroe" name="filtroe" onchange="listar_costos($(this).val())" required>
+                                            echo $tespecialita.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroe" name="filtroe" onchange="" required>
                                             <option value="0">Seleccione</option>';
                                             echo '  </select> '; 
                                            // echo "<script>$('#filtro').val(".$filtrado.");</script>";      
@@ -231,7 +228,7 @@ class configurar_view{
                                             <div class="well text-left">
                                             <?php 
                                                     //$link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
-                                                    $link = "cargar_listaemp($(this),$('#filtroeeh'),4)";
+                                                   // $link = "cargar_listaemp($(this),$('#filtroeeh'),4)";
                                                     echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroh" name="filtroh" 
                                                     onchange="'.$link.'" required><option value="0">Seleccione</option>';
                                                     foreach ($institu as $valus){
@@ -239,7 +236,7 @@ class configurar_view{
                                                     }
                                                     echo '  </select> '; 
 
-                                                    echo $tespecialita.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroeeh" name="filtroeeh" onchange="listar_horarios($(this).val())" required>
+                                                    echo $tespecialita.'<select class="form-control custom-select my-1 mr-sm-2" id="filtroeeh" name="filtroeeh" onchange="" required>
                                                     <option value="0">Seleccione</option>';
                                                     echo '  </select> '; 
                                                 // echo "<script>$('#filtro').val(".$filtrado.");</script>";      
@@ -286,7 +283,7 @@ class configurar_view{
                                 <table class="table"><tr><td>
                                 <?php 
                                     //$link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
-                                    $link = "cargar_especialidades($(this),$('#cmbespecl'),5)";
+                                    //$link = "cargar_especialidades($(this),$('#cmbespecl'),5)";
                                     echo $tinstitucion.'<select class="form-control custom-select my-1 mr-sm-2" id="cmbinst" name="cmbinst" 
                                     onchange="'.$link.'" required><option value="0">Seleccione</option>';
                                     foreach ($institu as $valus){
@@ -294,7 +291,7 @@ class configurar_view{
                                     }
                                     echo '  </select></div></td><td>'.$tcmbespe; 
                                 ?>
-                                    <select onchange="recuperar_campos($(this))" class="form-control custom-select my-1 mr-sm-2" id="cmbespecl" name="cmbespecl"></select><br></td></tr>
+                                    <select onchange="" class="form-control custom-select my-1 mr-sm-2" id="cmbespecl" name="cmbespecl"></select><br></td></tr>
                                     <tr><td colspan="2"><div class="alert-danger"><?php echo $talertas1 ?></td></tr></table>
                                     <div class="row">
                                         <div class="col-sm-2">
@@ -305,6 +302,7 @@ class configurar_view{
                                                 <p class="drag"><a class="btn btn-default">Number</a></p>
                                                 <p class="drag"><a class="btn btn-default">Date</a></p>
                                                 <p class="drag"><a class="btn btn-default">Catalogo</a></p>
+                                                <p class="drag"><a class="btn btn-default">Check</a></p>
                                             </div>
                                         </div>
 
@@ -327,8 +325,8 @@ class configurar_view{
                                             </div><br>
 
                                             <table class="table"><tr><td>
-                                                <button onclick="guardar_campos()" class="btn btn-primary pull-center">Guardar</button>
-                                            </td><td>
+                                                <button class="btn btn-primary pull-center bguardar">Guardar</button>
+                                                </td><td>
                                                 <div id="actions" class="row botonsubir">
                                                     <span class="btn btn-success fileinput-button">
                                                         <i class="glyphicon glyphicon-plus"></i>
@@ -339,11 +337,56 @@ class configurar_view{
                                                     <input name="fileexa" id="fileexa" type="file"  accept=".isco"/>
                                                 </div>
                                             </td></tr></table>
-                                           
                                         </div>
                                     </div>
                     <!-- fin armar historias clinicas -->
                             </div>
+
+                    <!--desde aqui-->
+                    <div role="tabpanel" class="tab-pane" id="examenes">
+                    <!-- tipos examenes -->
+                            <table class="table">
+                                <tr><td>
+                                    <?php 
+                                        //$link = "javascript:location.href='?open=".encrypt($open,leer())."&kode=".encrypt('id='.$id.'&sub='.$sub,leer())."&filtro='+$(this).val()";
+                                        //$link = "cargar_especialidades($(this),$('#cmbespeclex'),5)";
+                                        echo $tinstitucion.'<select class="form-control custom-select  my-1 mr-sm-2" id="cmbinstex" name="cmbinstex" 
+                                        onchange="'.$link.'" required><option value="0">Seleccione</option>';
+                                        foreach ($institu as $valus){
+                                            echo '<option value="'.$valus['id_institucion'].'">'.$valus['name_institucion'].'</option>';
+                                        }
+                                        echo '</select>';
+                                    ?>
+                                </td><td><?php echo $tcmbespe; ?>
+                                    <select onchange="" class="form-control custom-select my-1 mr-sm-2" id="cmbespeclex" name="cmbespeclex"></select>
+                                </td></tr> 
+                                <tr><td>
+                                    <div class="col-sm-5">
+                                        <div id="modules">
+                                                <p class="drag"><a class="btn btn-link">Agrupar</a></p>
+                                                <p class="drag"><a class="btn btn-default">Check</a></p>
+                                                <p class="drag"><a class="btn btn-default">Textarea</a></p>
+                                                <p class="drag"><a class="btn btn-default">Catalogo</a></p>
+                                                
+                                        </div>
+                                    </div>
+                                </td><td>
+                                    <div class="col-sm-10">
+                                            <div class="tab-content cuadroexa">
+                                                <div  class="tab-pane fade in active" id="colum0"></div>
+                                                <div  class="tab-pane fade in active" id="colum1"></div>
+                                                <div  class="tab-pane fade in active" id="colum2"></div>
+                                            </div>
+                                            <br>
+                                            <button onclick="guardar_planexa()" class="btn btn-primary pull-center">Guardar</button>
+                                    </div>
+
+                                </td></tr>
+                            </table>
+                    <!-- fin examenes -->
+                        </div>
+
+
                 </div>
             </div>
 

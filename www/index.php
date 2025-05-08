@@ -13,7 +13,8 @@
  * @note      PAGINA PRINCIPAL DEL SITIO
  */
 ini_set('display_errors',0);
- error_reporting(E_ALL);  require_once("../config/direcciones.php"); require_once($configura."inc.sesion.php"); ob_start("optimiza_pagina"); require_once($configura."lenguaje.php"); require_once($configura."generar_mail.php");?>
+ error_reporting(E_ALL);  
+ require_once("../config/direcciones.php"); require_once($configura."inc.sesion.php"); ob_start("optimiza_pagina"); require_once($configura."lenguaje.php"); require_once($configura."generar_mail.php");?>
 <html lang="es">
   <head>
       <title><?php echo $titule; ?></title>
